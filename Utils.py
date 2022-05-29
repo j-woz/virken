@@ -172,7 +172,9 @@ def run_poll(display, command, page_output=False):
 def pager_str(message):
     command = get_pager()
     log_command("pager_str", command)
-    subprocess.run(command, input=message.encode("UTF-8"))
+    cp = subprocess.run(command, input=message.encode("UTF-8"))
+    if cp.returncode != 0:
+        logger.warn("pager failed!")
 
 def pager_files(display, files):
     assert(type(files) == list)
@@ -185,7 +187,9 @@ def pager_files(display, files):
         logger = log_tools.logger_get(None, "Utils")
         logger.warn("pager_files(): command returned code=%i : %s" %
                     (cp.returncode, str(command)))
+        return False
     display.window.keypad(True)
+    return True
 
 def editor_files(display, files):
     command  = get_editor()
