@@ -1,2 +1,0 @@
-# vcmenu
-Version control menu

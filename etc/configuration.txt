@@ -1,0 +1,1 @@
+VCMENU_PAGER should be less --force to enable colors

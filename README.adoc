@@ -1,0 +1,7 @@
+
+= VC Menu
+
+Version Control Menu
+
+Requires Python 3.6 for PosixPath iterable stuff
+

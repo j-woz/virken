@@ -1,0 +1,139 @@
+
+BUGS:
+
+Button for SVN resolved via Subversion subcommand (x3) - DRAFT 2022-02-12 NOT DONE
+
+FEATURES:
+
+Hide SVN externals (prefix 'X')
+
+Git unstage changes (grh) (x2)
+
+Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
+
+Git reset index (grp)
+
+Unknown directories look like files - add trailing slash - SVN only?
+
+Use gm_readline()
+
+Allow removing it
+
+Git stash push/pop
+
+Sort by name/size/date
+
+File rename
+
+Support /bin/less flags (disable bell!)
+
+Set/reset x bit
+
+View vcmenu log from within app - NEW 2022-05-12
+
+STANDARDS:
+
+A: selects all
+A: if selected all, select none
+M: NEW: selects modified
+Z: NEW: reverse selection
+
+Handle Git Rename-Modify ("RM") cases:
+
+ M src/db_tools.py
+RM test/test-all.sh -> test/test-core.sh
+?? src/log_tools.py
+?? test/test-workflows.sh
+
+Desired behavior with no selections:
+
+c:    commit:  blank argument
+d:    diff:    blank argument
+e:    examine: arrowed file
+[sp]: mark:    arrowed file
+
+Needed for git commit with staged changes
+
+SVN un-add : svn rm --keep-local
+
+DONE
+
+Unselect all, Select none (see below)
+
+Behavior with no selections x3 (at bottom)
+Check that commits with no selections are consistent from SVN to Git
+With no selections, SVN seems to default to arrowed file not all files.
+Does git do the same?  -Yes. I think we want all files (blank arguments).
+
+Add git ignores from other files - check new 'man gitignore'
+
+Git diff --cached x2 - DONE
+
+Use of gadgets/stash - DONE
+
+SVN Revert - DOES NOT WORK 2019-10-31 - FIXED
+
+svn cp copies do not appear 'A + ...' - FIXED
+
+Check what happens when you delete the last file in the list - crashes x2
+
+Ability to enter 2-digit number for goto - DONE
+
+Goto can jump to a number off the screen - RESOLVED
+
+Display git branch at top - DONE
+
+glob select (g) - DONE
+
+Add glob to vc_git - DONE
+
+PAGE_DOWN crashes past the end - FIXED
+
+Launch EDITOR (v) - DONE
+
+e does not refer to selected files. -INVALID 2019-11-17
+
+SVN diff with no files selected uses old values? -INVALID?
+
+VC FS mode (no VC) - DONE
+
+If you x a file for deletion, that mark is removed after a 'git add'. - FIXED
+
+cd into given directory, pop back to previous directory : will not work without VC FS - DONE
+
+Handle missing fs-ignores x2 - DONE 2021-03-01
+
+Show file status, size, modified time (t/T) x3 - DONE 2021-03-01
+
+Update directory in header after change in SVN - DONE 2021-05-11
+
+Filename search - DONE 2021-05-11
+
+Colors: basic bold to start - DONE 2021-05-11
+        fix background to bright white - DONE 2021-05-11
+
+Save marks feature: save your marks for restart. - DONE 2021-05-12
+
+Show SVN stash files when non-empty so they can be popped (x5) - DONE 2021-10-09
+
+Diff two plain files - DONE 2021-10-09
+
+Show file count when paging (MORE: ##) - DONE 2021-10-09
+
+View logs, blame (x5) - DONE 2021-10-09
+
+Better redraw when moving arrow - DONE?
+
+Git unstage changes (grh) - DONE 2021-10-09
+
+Git reset index (grp) - DONE 2021-10-09
+
+FIX: Git subcommand followed by g for glob creates messy output - DONE 2022-02-12
+
+Unknown directories look like files - add trailing slash - SVN only! - DONE 2022-02-12
+
+Trying to load with no .vcmenu.json crashes. - DONE 2022-02-18
+
+Ignored files for FS mode (x2) - FIXED 2022-03-03
+
+Show executable bit (x2) - DONE 2022-04-20

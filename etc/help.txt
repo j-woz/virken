@@ -1,0 +1,40 @@
+VCMENU HELP
+
+Enter:  refresh
+Number: select menu item
+a:      Mark: VC add selected         UP:   Move up
+A:      select all                    P:    Page up
+b:      Show blame                    DOWN: Move down
+c:      Change directory              N:    Page down
+C:      VC commit selected+           ^:    Go up a directory
+d:      VC diff+                      <:    Back directory*
+D:      Two file diff                 >:    Forward directory*
+e:      Examine file in PAGER         +:    Create directory*
+g:      Glob                          /:    Filename search*
+f:      Toggle FS mode
+G:      Git subcommand
+h:      Show this help
+I:      Show ignored files (toggle)
+j:      Jump to number
+k:      Mark: Move to backup file
+K:      Mark: Copy to backup file
+l:      Load marks from file
+L:      View log
+q:      Quit
+s:      Save marks to file
+S:      Subversion subcommand (resolve@, stash@, un-add*)
+t:      Toggle file status for file*
+T:      Toggle file status for all*
+v:      Launch editor
+V:      reVert
+w:      Where (search)
+x:      Mark: Delete
+X:      Expunge deletes and backups
+z:      Select zero (hide arrow)
+::      Control line (like vi)*
+
++ Command will operate with no arguments if nothing is selected.
+@ Command will operate with current argument if nothing is selected.
+* Not yet implemented
+
+[ Hit 'q' now to return to vcmenu. ]

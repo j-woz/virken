@@ -1,0 +1,70 @@
+!/bin/sh
+set -eu
+
+# VCMENU
+# Main wrapper script
+# This is POSIX sh compatible for speed
+
+VCMENU_HOME=$( realpath $( dirname $0 ) )
+export VCMENU_HOME
+
+# Use VCMENU_TMP or TMP/USER/vcmenu
+TMP=${TMP:-/tmp}
+VCMENU_TMP=${VCMENU_TMP:-$TMP/$USER/vcmenu}
+export VCMENU_TMP # Used internally by vcmenu
+mkdir -p $VCMENU_TMP
+VCMENU_ERR_LOG=$VCMENU_TMP/err.log
+
+# Check that we have Python3
+if ! which python3 > /dev/null 2>&1
+then
+  echo "Add python3.6+ to your PATH!"
+  exit 1
+fi
+
+# Run VCMENU!
+if python3 $VCMENU_HOME/vcmenu.py $* 2> $VCMENU_ERR_LOG
+then
+  CODE=0
+else
+  CODE=$?
+fi
+
+if [ $CODE != 0 ]
+then
+  # If there was an error, pause so the user can see it:
+  echo "vcmenu: ERROR code: $CODE"
+  echo "vcmenu: press Enter to quit."
+  read _
+
+  # Is this needed for normal exit on Linux? 2020-02-02
+  # It is not needed for normal exit on Cygwin.
+  # Clean up screen:
+  # Cursor to start
+  e='\033['
+  printf "${e}70D"
+  # Erase line
+  printf "${e}K"
+fi
+
+
+# We redirected to the log, assert this file exists:
+if ! [ -r $VCMENU_ERR_LOG ]
+then
+  echo "vcmenu: could not read error log: $VCMENU_ERR_LOG"
+  exit 1
+fi
+
+# If the log has anything in it, show it:
+SIZE=$( stat --format "%s" $VCMENU_ERR_LOG )
+if [ $SIZE != 0 ]
+then
+  echo
+  echo "vcmenu: ERRORS: "
+  echo "( see $VCMENU_ERR_LOG )"
+  echo
+  cat $VCMENU_ERR_LOG
+fi
+
+# Return the code from python3
+exit $CODE
