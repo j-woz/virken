@@ -105,11 +105,11 @@ class vc_svn(vc_base):
         chars = tokens[0]
         name  = tokens[7]
         if self.state.glob_match(reo, name):
-            name_shown = name
+            flags = ""
             mark = self.state.get_mark(name)
             if self.state.is_executable(name):
-                name_shown += "*"
-            results.append(Entry(mark, chars+extra, name, name_shown))
+                flags += "*"
+            results.append(Entry(mark, chars+extra, name, flags))
 
     def check_dirs(self, results):
         """

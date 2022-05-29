@@ -41,16 +41,16 @@ class vc_fs(vc_base):
                 continue
             if not self.state.glob_match(glob_reo, name):
                 continue
-            name_shown = name
+            flags = ""
             # if os.path.isdir(name):
             if self.is_broken_link(name):
-                name_shown += "!"
+                flags += "!"
             elif self.state.is_executable(name):
-                name_shown += "*"
+                flags += "*"
             elif self.state.is_directory(name):
-                name_shown += "/"
+                flags += "/"
             mark = self.state.get_mark(name)
-            result.append(Entry(mark, " ", name, name_shown))
+            result.append(Entry(mark, " ", name, flags))
         self.state.table = result
         self.state.stale = False
         return result
@@ -92,8 +92,3 @@ class vc_fs(vc_base):
     def revert(self, filename):
         self.display.warn("Invalid operation!")
 
-    def is_broken_link(self, filename):
-        # https://stackoverflow.com/questions/20794/find-broken-symlinks-with-python
-        if self.state.is_link and not os.path.exists(filename):
-            return True
-        return False

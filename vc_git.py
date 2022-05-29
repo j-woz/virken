@@ -124,8 +124,13 @@ class vc_git(vc_base):
                 continue
             if self.state.glob_match(reo, name):
                 mark = self.state.get_mark(name)
+                flags = ""
+                if self.state.is_executable(name):
+                    flags += "*"
+                if self.state.is_broken_link(name):
+                    flags += "!"
                 if status_type == "normal":
-                    entry = Entry(mark, state, name, name)
+                    entry = Entry(mark, state, name, flags)
                 elif status_type == "rename":
                     entry = EntryRename(mark, state, fromfile, name)
                 else:

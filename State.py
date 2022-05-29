@@ -520,7 +520,8 @@ class State:
         assert s is not None, "could not get_stats: " + filename
         if s == "BROKEN_LINK":
             return False
-        result = bool(s.st_mode & stat.S_IEXEC)
+        result = bool(s.st_mode & stat.S_IEXEC) and \
+                 not stat.S_ISDIR(s.st_mode)
         if result: self.logger.info("executable: " + filename)
         return result
 
@@ -530,13 +531,17 @@ class State:
         if result: self.logger.info("directory: " + filename)
         return result
 
-    def is_link(self, filename0):
+    def is_link(self, filename):
         if filename in self.cache_links:
             result = self.cache_links[filename]
         else:
-            result = os.islink(filename)
+            result = os.path.islink(filename)
             self.cache_links[filename] = result
         return result
+
+    def is_broken_link(self, filename):
+        # https://stackoverflow.com/questions/20794/find-broken-symlinks-with-python
+        return self.is_link(filename) and not os.path.exists(filename)
 
     def info(self, msg):
         self.logger.info(msg)

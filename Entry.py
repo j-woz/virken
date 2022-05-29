@@ -9,22 +9,28 @@ class Entry:
 
     ''' Most entries A, M, etc. '''
 
-    def __init__(self, mark, state, name, name_display):
+    def __init__(self, mark, state, name, flags=""):
         self.mark  = mark
         self.state = state
         self.name  = name
-        self.name_display = name_display
+        self.flags = flags
 
     def __str__(self):
-        return "Entry: %s %s %s" % (self.mark, self.state, self.name)
+        result = "Entry: %s %s %s" % (self.mark, self.state, self.name)
+        if len(self.flags) > 0: result += "[%s]" % self.flags
+        return result
 
     def show(self, name_max):
-        return self.state + " " + self.shrink_name(name_max)
+        f = len(self.flags)
+        if f > 0: name_max = name_max - f
+        result = self.state + " " + self.shrink_name(name_max)
+        if f > 0: result += "%s" % self.flags
+        return result
 
     def shrink_name(self, name_max):
-        if len(self.name_display) > name_max:
-            return self.name_display[0:name_max]
-        return self.name_display
+        if len(self.name) > name_max:
+            return self.name[0:name_max]
+        return self.name
 
     def get_stats(self):
         import datetime, os
