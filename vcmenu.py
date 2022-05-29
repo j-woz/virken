@@ -219,7 +219,8 @@ from enum import Enum
 
 
 class MenuAction(Enum):
-    LOOP    = 1
+    LOOP    = 1    # Normal case, loop
+    ARROW   = 2    # Just update the menu pointer
     HELP    = 100
     EDIT    = 101
     EXAMINE = 102
@@ -235,7 +236,8 @@ class MenuAction(Enum):
     GIT_RESET_PATCH = 205
     SVN_STASH_POP   = 314
     SVN_STASH_PUSH  = 315
-    EXIT    = 1000
+    SVN_RESOLVED    = 316
+    EXIT    = 1000  # Exit the program.
 
 
 def show_menu(window):
@@ -244,8 +246,13 @@ def show_menu(window):
     state.VC.display = display
     state.display    = display
 
+    result = None
     while True:
-        prefix = state.show()
+        if result == MenuAction.ARROW:
+            # ARROW means skip the full redraw
+            result = MenuAction.LOOP
+        else:
+            prefix = state.show()
         c = display.ask1("%s %s: " % (prefix, state.VC.name))
         if c != " ":
             c = c.strip()
@@ -256,13 +263,14 @@ def show_menu(window):
         if state.chdir:
             set_vc(state, logger)
             set_vc_info(state.VC, logger)
-        if result != MenuAction.LOOP:
+        if result != MenuAction.LOOP and result != MenuAction.ARROW:
             menu_action = result
             return
         logger.debug("LOOP")
 
 
 def handle_char(c):
+    """ Respond to a user input command """
     import Utils
     global state, display, logger
     result = MenuAction.LOOP
@@ -343,8 +351,10 @@ def handle_char(c):
         state.select_zero()
     elif c == "KEY_UP" or c == "p":
         state.key_up()
+        result = MenuAction.ARROW
     elif c == "KEY_DOWN" or c == "n":
         state.key_down()
+        result = MenuAction.ARROW
     elif c == "P" or c == "KEY_PPAGE":
         state.page_up()
     elif c == "N" or c == "KEY_NPAGE":

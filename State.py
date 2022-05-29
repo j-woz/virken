@@ -209,14 +209,18 @@ class State:
         return result
 
     def key_up(self):
+        self.display.menu_pointer(self.offset, self.current, False)
         self.current = self.current - 1
         if self.current < self.offset:
             self.current = self.offset
+        self.display.menu_pointer(self.offset, self.current, True)
 
     def key_down(self):
+        self.display.menu_pointer(self.offset, self.current, False)
         self.current = self.current + 1
         if self.current >= self.offset + self.shown - 1:
             self.current = self.offset + self.shown - 1
+        self.display.menu_pointer(self.offset, self.current, True)
 
     def page_up(self):
         height, width = self.display.window.getmaxyx()
