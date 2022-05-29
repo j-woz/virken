@@ -43,7 +43,7 @@ class vc_fs(vc_base):
                 continue
             flags = ""
             # if os.path.isdir(name):
-            if self.is_broken_link(name):
+            if self.state.is_broken_link(name):
                 flags += "!"
             elif self.state.is_executable(name):
                 flags += "*"
@@ -91,4 +91,3 @@ class vc_fs(vc_base):
 
     def revert(self, filename):
         self.display.warn("Invalid operation!")
-
