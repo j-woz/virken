@@ -187,7 +187,7 @@ def handle_action(action):
         state.resolved()
         state.stale = True
     else:
-        raise("Unknown action!")
+        raise(Exception("Unknown action! " + str(action)))
 
 
 def detect_vc(p):
