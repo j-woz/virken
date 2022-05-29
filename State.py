@@ -260,10 +260,11 @@ class State:
     def examine(self):
         filenames = self.get_target_filenames()
         # errs = None
-        Utils.pager_files(self.display, filenames)
-        # if errs != None:
-        #     sys.stderr.write(errs)
-        #     Utils.pager_str(self.display, errs)
+        rc = Utils.pager_files(self.display, filenames)
+        if not rc:
+            # sys.stderr.write(errs)
+            # Utils.pager_str(self.display, ")
+            self.display.warn("pager failed!")
 
     def glob_ask(self):
         g = self.display.ask("glob: ")
