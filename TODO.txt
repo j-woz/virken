@@ -1,8 +1,6 @@
 
 BUGS:
 
-Button for SVN resolved via Subversion subcommand (x3) - DRAFT 2022-02-12 NOT DONE
-
 FEATURES:
 
 Hide SVN externals (prefix 'X')
@@ -135,3 +133,7 @@ Trying to load with no .vcmenu.json crashes. - DONE 2022-02-18
 Ignored files for FS mode (x2) - FIXED 2022-03-03
 
 Show executable bit (x2) - DONE 2022-04-20
+
+Button for SVN resolved via Subversion subcommand (x3) -
+DRAFT 2022-02-12 NOT DONE
+DONE 2022-06-06

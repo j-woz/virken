@@ -184,7 +184,7 @@ def handle_action(action):
         state.stash_push()
         state.stale = True
     elif action == MenuAction.SVN_RESOLVED:
-        state.resolved()
+        state.VC.resolved()
         state.stale = True
     else:
         raise(Exception("Unknown action! " + str(action)))
@@ -236,7 +236,7 @@ class MenuAction(Enum):
     GIT_RESET_PATCH = 205
     SVN_STASH_POP   = 314
     SVN_STASH_PUSH  = 315
-    SVN_RESOLVED    = 316
+    SVN_RESOLVED    = 320
     EXIT    = 1000  # Exit the program.
 
 
