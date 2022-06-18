@@ -342,6 +342,8 @@ def handle_char(c):
         state.stale = True
     elif c == "w":
         state.search()
+    elif c == "W":
+        state.toggle_worddiff()
     elif c == "x":
         state.mark_delete()
         state.key_down()
