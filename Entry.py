@@ -61,5 +61,5 @@ class EntryRename(Entry):
         return "Entry: %s %s %s -> %s" % \
             (self.mark, self.state, self.fromfile, self.name)
 
-    def show(self):
+    def show(self, name_max):
         return self.state + " " + self.fromfile + " -> " + self.name
