@@ -10,10 +10,10 @@ class Entry:
     ''' Most entries A, M, etc. '''
 
     def __init__(self, mark, state, name, flags=""):
-        self.mark  = mark
-        self.state = state
-        self.name  = name
-        self.flags = flags
+        self.mark  = mark   # E.g. ">", "X", etc.
+        self.state = state  # E.g. "A", "M", etc.
+        self.name  = name   # E.g. the file name
+        self.flags = flags  # E.g. "*" (executable), "/" (directory)
 
     def __str__(self):
         result = "Entry: %s %s %s" % (self.mark, self.state, self.name)
