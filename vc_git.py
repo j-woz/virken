@@ -101,6 +101,8 @@ class vc_git(vc_base):
                 break
             line = line.rstrip()
             tokens = line.split(" ")
+            self.logger.info("tokens: " + str(tokens))
+
             if len(tokens) == 2:
                 state = tokens[0]
                 name  = tokens[1]
@@ -122,14 +124,18 @@ class vc_git(vc_base):
             else:
                 self.display.warn("unknown line: " + str(tokens), timeout=10)
                 continue
+            if "D" in state:
+                status_type = "deleted"
             if self.state.glob_match(reo, name):
                 mark = self.state.get_mark(name)
                 flags = ""
-                if self.state.is_executable(name):
+                if status_type == "deleted":
+                    flags += "(X)"
+                elif self.state.is_executable(name):
                     flags += "*"
                 if self.state.is_broken_link(name):
                     flags += "!"
-                if status_type == "normal":
+                if status_type == "normal" or status_type == "deleted":
                     entry = Entry(mark, state, name, flags)
                 elif status_type == "rename":
                     entry = EntryRename(mark, state, fromfile, name)
