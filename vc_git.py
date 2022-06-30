@@ -145,7 +145,7 @@ class vc_git(vc_base):
         return result
 
     def add(self):
-        filenames = self.state.get_target_filenames()
+        filenames = self.state.get_selected_filenames()
         # self.display.outln("")
         # self.display.warn("git add " + str(filenames))
         command = [ "git", "add" ]
@@ -153,7 +153,7 @@ class vc_git(vc_base):
         Utils.run_simple(self.display, command)
 
     def diff(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("git diff " + str(filenames))
         command = [ "git", "diff" ]
         command += filenames
@@ -164,7 +164,7 @@ class vc_git(vc_base):
         Utils.run_stdout(self.display, command)
 
     def commit(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("git commit " + str(filenames))
         command = [ "git", "commit" ]
         command += filenames
@@ -181,7 +181,7 @@ class vc_git(vc_base):
     def add_p(self):
         global logger
         logger = log_tools.logger_get(logger, "VC Git")
-        filenames = self.state.get_target_filenames()
+        filenames = self.state.get_selected_filenames()
         command = [ "git", "add", "-p" ]
         if len(filenames) == 0:
             filenames = [ "." ]
@@ -191,7 +191,7 @@ class vc_git(vc_base):
     def checkout_p(self):
         global logger
         logger = log_tools.logger_get(logger, "VC Git")
-        filenames = self.state.get_target_filenames()
+        filenames = self.state.get_selected_filenames()
         command = [ "git", "checkout", "-p" ]
         if len(filenames) == 0:
             filenames = [ "." ]
@@ -204,7 +204,7 @@ class vc_git(vc_base):
     def diff_cached(self):
         global logger
         logger = log_tools.logger_get(logger, "VC Git")
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         command = [ "git", "diff", "--cached", "--color=always" ]
         if len(filenames) == 0:
             filenames = [ "." ]
@@ -213,7 +213,7 @@ class vc_git(vc_base):
         Utils.run_stdout(self.display, command)
 
     def log(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         command = [ "git", "log" ]
         command += filenames
         global logger
@@ -221,7 +221,7 @@ class vc_git(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def blame(self):
-        filenames = self.state.get_target_filenames(none_ok=False)
+        filenames = self.state.get_selected_filenames(none_ok=False)
         if len(filenames) != 1:
             self.state.display.warn("Blame requires 1 file!")
             return
@@ -234,7 +234,7 @@ class vc_git(vc_base):
     def reset_head(self):
         global logger
         logger = log_tools.logger_get(logger, "VC Git")
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         for filename in filenames:
             logger.info("reset head: " + filename)
             Utils.make_backup_cp(filename)
@@ -246,7 +246,7 @@ class vc_git(vc_base):
     def reset_patch(self):
         global logger
         logger = log_tools.logger_get(logger, "VC Git")
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         for filename in filenames:
             logger.info("reset patch: " + filename)
             Utils.make_backup_cp(filename)

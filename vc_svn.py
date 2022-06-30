@@ -136,7 +136,7 @@ class vc_svn(vc_base):
             results.append(Entry(mark, "S ", f))
 
     def add(self):
-        filenames = self.state.get_target_filenames()
+        filenames = self.state.get_selected_filenames()
         try:
             command = [ "svn", "add" ]
             command += filenames
@@ -147,7 +147,7 @@ class vc_svn(vc_base):
             pass
 
     def diff(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("svn diff " + str(filenames),
         #                  timeout=len(filenames))
         command = [ "svn", "diff" ]
@@ -159,7 +159,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def commit(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("svn commit " + str(filenames),
         #                timeout=len(filenames))
         command = [ "svn", "commit", "--" ]
@@ -177,7 +177,7 @@ class vc_svn(vc_base):
         subprocess.call(command)
 
     def log(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         if len(filenames) > 1:
             self.state.display.warn("Log requires 0 or 1 file(s)!")
             return
@@ -188,7 +188,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def blame(self):
-        filenames = self.state.get_target_filenames(none_ok=False)
+        filenames = self.state.get_selected_filenames(none_ok=False)
         if len(filenames) != 1:
             self.state.display.warn("Blame requires 1 file!")
             return
@@ -199,7 +199,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def resolved(self):
-        filenames = self.state.get_target_filenames(none_ok=False)
+        filenames = self.state.get_selected_filenames(none_ok=False)
         command = [ "svn", "resolved" ]
         command += filenames
         global logger
