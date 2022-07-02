@@ -28,6 +28,11 @@ Set/reset x bit
 
 View vcmenu log from within app - NEW 2022-05-12
 
+Forward/back directory - HELP < 2022-07-01
+
+SVN un-add - HELP < 2022-07-01
+
+
 STANDARDS:
 
 A: selects all
