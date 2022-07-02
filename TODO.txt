@@ -5,9 +5,6 @@ FEATURES:
 
 Hide SVN externals (prefix 'X')
 
-Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
-DONE - ~2022-06-15
-
 Git reset index (grp)
 
 Unknown directories look like files - add trailing slash - SVN only?
@@ -124,7 +121,7 @@ Show file count when paging (MORE: ##) - DONE 2021-10-09
 
 View logs, blame (x5) - DONE 2021-10-09
 
-Better redraw when moving arrow - DONE?
+Better redraw when moving arrow - DONE
 
 Git unstage changes (grh) - DONE 2021-10-09
 
@@ -143,3 +140,6 @@ Show executable bit (x2) - DONE 2022-04-20
 Button for SVN resolved via Subversion subcommand (x3) -
 DRAFT 2022-02-12 NOT DONE
 DONE 2022-06-06
+
+Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
+DONE - ~2022-06-15
