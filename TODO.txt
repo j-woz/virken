@@ -5,15 +5,7 @@ FEATURES:
 
 Hide SVN externals (prefix 'X')
 
-Git reset index (grp)
-
-Unknown directories look like files - add trailing slash - SVN only?
-
 Use gm_readline()
-
-Allow removing it
-
-Git stash push/pop
 
 Sort by name/size/date
 
