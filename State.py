@@ -1,6 +1,7 @@
 
 # STATE PY
 
+from enum import Enum
 import os, stat
 import subprocess
 
@@ -15,6 +16,10 @@ class State:
     """ The overall state of VCMENU.
         Contains the table of VC entries.
     """
+
+    class Diff(Enum):
+        LINE = 1
+        WORD = 2
 
     def __init__(self):
         # The Version Control system object
@@ -36,6 +41,8 @@ class State:
         self.ignores = True
         # Whether to show file stats (timestamp, size)
         self.stats = False
+        # Whether to use worddiff
+        self.diff_type = State.Diff.LINE
         # A single string glob pattern
         self.glob_pattern = None
         # A list of patterns to ignore
@@ -64,6 +71,15 @@ class State:
         #       else "Stats disabled."
         # self.display.warn(msg)
         self.stale = True
+
+    def toggle_worddiff(self):
+        self.diff_type = State.Diff.WORD \
+            if self.diff_type == State.Diff.LINE \
+               else State.Diff.LINE
+        msg = "diff type: "
+        msg += "line" if self.diff_type == State.Diff.LINE \
+            else "word"
+        self.display.warn(msg, timeout=2)
 
     def show(self):
         """ Returns a string that will prefix the main menu prompt """
