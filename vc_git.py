@@ -156,6 +156,8 @@ class vc_git(vc_base):
         filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("git diff " + str(filenames))
         command = [ "git", "diff" ]
+        if self.state.diff_type == State.Diff.WORD:
+            command.append("--word-diff=color")
         command += filenames
         global logger
         self.logger.info(command)

@@ -6,6 +6,7 @@ FEATURES:
 Hide SVN externals (prefix 'X')
 
 Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
+DONE - ~2022-06-15
 
 Git reset index (grp)
 
