@@ -183,24 +183,26 @@ class State:
         counts = "%i/%i" % (self.offset, len(self.table)-1)
         return "(%s %s)" % (",".join(modifiers), counts)
 
-    def get_selected_filenames(self, none_ok=False):
+    def get_selected_filenames(self, mark=">", none_ok=False):
         """ none_ok : if True, nothing selected means return nothing,
                       not current
             @return: List of string filenames
         """
-        entries = self.get_selected_entries(none_ok=none_ok)
+        entries = self.get_selected_entries(mark=mark,
+                                            none_ok=none_ok)
         result = []
         for entry in entries:
             result += entry.names()
-        self.logger.info("get_selected_filenames: " + str(result))
+        self.logger.info("get_selected_filenames: '%s' %s" %
+                         (mark, str(result)))
         return result
 
-    def get_selected_entries(self, none_ok=False):
+    def get_selected_entries(self, mark=">", none_ok=False):
         """ none_ok : if True, nothing selected means return nothing,
                       not current
             @return: List of Entry objects
         """
-        selected = self.get_entries(">")
+        selected = self.get_entries(mark)
         if len(selected) > 0:
             return selected
         if self.current == 0:
@@ -216,7 +218,7 @@ class State:
             if "NULL" == entry: continue
             if entry.mark == c:
                 result.append(entry)
-        self.logger.info("get_filenames(): " + str(result))
+        self.logger.info("get_entries(): " + str(result))
         return result
 
     def key_up(self):
@@ -407,7 +409,7 @@ class State:
         self.stale = True
 
     def expunge_deleted(self):
-        filenames = self.get_filenames("X")
+        filenames = self.get_selected_filenames("X", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
@@ -422,7 +424,7 @@ class State:
                                   (filename, str(e)))
 
     def expunge_backup_cp(self):
-        filenames = self.get_filenames("K")
+        filenames = self.get_selected_filenames("K", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
@@ -433,7 +435,7 @@ class State:
             Utils.make_backup_cp(filename)
 
     def expunge_backup_mv(self):
-        filenames = self.get_filenames("k")
+        filenames = self.get_selected_filenames("k", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
