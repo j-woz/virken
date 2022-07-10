@@ -315,9 +315,7 @@ class State:
     def glob_match(self, reo, name):
         if reo is None: return True
         match = reo.search(name)
-        if match is not None:
-            return True
-        return False
+        return match is not None
 
     def jump_ask(self):
         n = self.display.ask("jump: ")
