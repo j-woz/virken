@@ -7,12 +7,12 @@ import subprocess
 from vc_base import vc_base
 
 from Entry import Entry, EntryRename
-from State import State
 import Utils
 
 import log_tools
 
 logger = None
+
 
 class vc_git(vc_base):
 
@@ -26,9 +26,8 @@ class vc_git(vc_base):
         from pathlib import Path
         import configparser
 
-        if self.info != None:
+        if self.info is not None:
             return
-        url = None
         config = configparser.ConfigParser()
         config.read(self.root/".git/config")
         if "remote \"origin\"" in config:
@@ -44,7 +43,7 @@ class vc_git(vc_base):
 
         branch = self.get_branch()
 
-        if repo == None:
+        if repo is None:
             print("Could not find GIT info!")
             exit(1)
         self.info = repo + " " + str(relative_url) + " @" + branch
@@ -63,7 +62,7 @@ class vc_git(vc_base):
         tokens = output.split("\n")
         tokens = list(map(lambda t: t.split(" "), tokens))
         import itertools
-        tokens = itertools.chain.from_iterable(tokens) # flatten
+        tokens = itertools.chain.from_iterable(tokens)  # flatten
         star = False
         result = "_vcmenu_branch_error"
         for token in tokens:
@@ -92,7 +91,8 @@ class vc_git(vc_base):
 
     def parse_status(self, p):
         ''' p: A subprocess.Popen '''
-        reo = self.state.glob_compile() # reo = Regular Expression Object
+        # reo = Regular Expression Object
+        reo = self.state.glob_compile()
         result = [ "NULL" ]
         while True:
             status_type = "normal"
