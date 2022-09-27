@@ -21,9 +21,9 @@ Sort by name/size/date
 
 File rename
 
-Support /bin/less flags (disable bell!)
+Set/reset x bit (x2)
 
-Set/reset x bit
+Support /bin/less flags (disable bell!)
 
 View vcmenu log from within app - NEW 2022-05-12
 
