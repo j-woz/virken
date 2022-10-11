@@ -5,6 +5,7 @@ import os
 import subprocess
 
 from vc_base import vc_base
+from State import State
 
 from Entry import Entry, EntryRename
 import Utils
