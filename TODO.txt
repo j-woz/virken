@@ -21,6 +21,7 @@ Forward/back directory - HELP < 2022-07-01
 
 SVN un-add - HELP < 2022-07-01
 
+Don't try to run editor on more than one file 2022-10-14
 
 STANDARDS:
 
