@@ -28,9 +28,13 @@ class Display:
         self.window.nodelay(False)
         cp = 142
         # Color 15 is bright white
-        curses.init_pair(cp, curses.COLOR_BLACK, 15)
-        a = curses.color_pair(cp)
-        self.window.bkgd(" ", a)
+        try:
+            # When this fails, try TERM=vt100
+            curses.init_pair(cp, curses.COLOR_BLACK, 15)
+            a = curses.color_pair(cp)
+            self.window.bkgd(" ", a)
+        except:
+            self.logger.info("could not initialize colors")
 
     def curses_stop(self):
         self.logger.info("curses_stop()")
