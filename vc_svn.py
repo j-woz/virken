@@ -44,6 +44,7 @@ class vc_svn(vc_base):
                     repo = tokens[2]
                 # Relative URL does not work in
                 #    SVN 1.7.14 (released 2013-11) (Stampede2 2022-04-27)
+                #    SVN 1.7.14 (released 2013-11) (CLASSE    2022-11-05)
                 # Leads to missing data in info line at top
                 # Could be fixed with additional string arithmetic
                 if line.startswith("Relative URL"):
