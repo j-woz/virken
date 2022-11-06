@@ -25,6 +25,8 @@ Don't try to run editor on more than one file 2022-10-14
 
 Crashes if run in a directory containing a deleted file 2022-10-19
 
+Support setting log level on command line 2022-11-05
+
 STANDARDS:
 
 A: selects all
