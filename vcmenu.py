@@ -444,4 +444,5 @@ def abort(logger):
     exit(1)
 
 
+# Run this program!
 main()
