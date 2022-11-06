@@ -7,6 +7,8 @@ import logging
 
 logger_handler = None
 
+TRACE = 5
+
 def logger_init(enabled=True):
     """ Set up the log file pointer.    """
     """ Run this before starting curses """

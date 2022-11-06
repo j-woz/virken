@@ -10,7 +10,7 @@ from vc_svn import vc_svn
 from vc_git import vc_git
 from vc_fs  import vc_fs
 
-from log_tools import logger_init, logger_get
+from log_tools import TRACE, logger_init, logger_get
 
 from Display import Display
 from State   import State

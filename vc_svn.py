@@ -4,10 +4,9 @@
 import os
 import subprocess
 
+from log_tools import TRACE
 from vc_base import vc_base
-
 from Entry import Entry
-
 import Utils
 
 
@@ -36,6 +35,7 @@ class vc_svn(vc_base):
                 line = line.strip()
                 if len(line) == 0:
                     break
+                self.logger.log(TRACE, "read: " + line)
                 if "W155010" in line:
                     print("svn info: W155010")
                     exit(1)
