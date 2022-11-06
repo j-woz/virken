@@ -361,9 +361,6 @@ def handle_char(c):
         state.page_up()
     elif c == "N" or c == "KEY_NPAGE":
         state.page_down()
-    # elif c == "M": # What is this? 2020-12-10
-    #     display.out("x")
-    #     Utils.run_poll(display, ["./delay.sh"])
     elif c == ">":
         state.cd()
     elif c == "^":
