@@ -1,6 +1,7 @@
 
 # STATE PY
 
+from enum import Enum
 import os, stat
 import subprocess
 
@@ -15,6 +16,10 @@ class State:
     """ The overall state of VCMENU.
         Contains the table of VC entries.
     """
+
+    class Diff(Enum):
+        LINE = 1
+        WORD = 2
 
     def __init__(self):
         # The Version Control system object
@@ -36,6 +41,8 @@ class State:
         self.ignores = True
         # Whether to show file stats (timestamp, size)
         self.stats = False
+        # Whether to use worddiff
+        self.diff_type = State.Diff.LINE
         # A single string glob pattern
         self.glob_pattern = None
         # A list of patterns to ignore
@@ -64,6 +71,15 @@ class State:
         #       else "Stats disabled."
         # self.display.warn(msg)
         self.stale = True
+
+    def toggle_worddiff(self):
+        self.diff_type = State.Diff.WORD \
+            if self.diff_type == State.Diff.LINE \
+               else State.Diff.LINE
+        msg = "diff type: "
+        msg += "line" if self.diff_type == State.Diff.LINE \
+            else "word"
+        self.display.warn(msg, timeout=2)
 
     def show(self):
         """ Returns a string that will prefix the main menu prompt """
@@ -167,21 +183,26 @@ class State:
         counts = "%i/%i" % (self.offset, len(self.table)-1)
         return "(%s %s)" % (",".join(modifiers), counts)
 
-    def get_target_filenames(self, none_ok=False):
+    def get_selected_filenames(self, mark=">", none_ok=False):
         """ none_ok : if True, nothing selected means return nothing,
                       not current
+            @return: List of string filenames
         """
-        entries = self.get_target_entries(none_ok=none_ok)
+        entries = self.get_selected_entries(mark=mark,
+                                            none_ok=none_ok)
         result = []
         for entry in entries:
-            result.append(entry.name)
+            result += entry.names()
+        self.logger.info("get_selected_filenames: '%s' %s" %
+                         (mark, str(result)))
         return result
 
-    def get_target_entries(self, none_ok=False):
+    def get_selected_entries(self, mark=">", none_ok=False):
         """ none_ok : if True, nothing selected means return nothing,
                       not current
+            @return: List of Entry objects
         """
-        selected = self.get_selected_entries()
+        selected = self.get_entries(mark)
         if len(selected) > 0:
             return selected
         if self.current == 0:
@@ -190,22 +211,14 @@ class State:
             return []
         return [ self.table[self.current] ]
 
-    def get_selected_entries(self):
-        """ Return list of Entries TODO use get_filenames(c) """
-        result = []
-        for entry in self.table:
-            if "NULL" == entry: continue
-            if entry.mark == ">":
-                result.append(entry)
-        return result
-
-    def get_filenames(self, c):
-        """ Return list of Entries marked with c """
+    def get_entries(self, c):
+        """ Return list of Entry objects marked with c """
         result = []
         for entry in self.table:
             if "NULL" == entry: continue
             if entry.mark == c:
-                result.append(entry.name)
+                result.append(entry)
+        self.logger.info("get_entries(): " + str(result))
         return result
 
     def key_up(self):
@@ -254,7 +267,7 @@ class State:
             self.table[i].mark = " "
 
     def edit(self):
-        filenames = self.get_target_filenames()
+        filenames = self.get_selected_filenames()
         # errs = None
         Utils.editor_files(self.display, filenames)
         # if errs != None:
@@ -262,7 +275,7 @@ class State:
         #     Utils.pager_str(self.display, errs)
 
     def examine(self):
-        filenames = self.get_target_filenames()
+        filenames = self.get_selected_filenames()
         # errs = None
         rc = Utils.pager_files(self.display, filenames)
         if not rc:
@@ -302,9 +315,7 @@ class State:
     def glob_match(self, reo, name):
         if reo is None: return True
         match = reo.search(name)
-        if match is not None:
-            return True
-        return False
+        return match is not None
 
     def jump_ask(self):
         n = self.display.ask("jump: ")
@@ -317,7 +328,7 @@ class State:
         self.current = int(n)
 
     def revert(self):
-        filenames = self.get_target_filenames()
+        filenames = self.get_selected_filenames()
         for filename in filenames:
             self.VC.revert(filename)
 
@@ -331,7 +342,7 @@ class State:
         self.mark("K")
 
     def mark(self, c):
-        entries = self.get_target_entries()
+        entries = self.get_selected_entries()
         for entry in entries:
             if "NULL" == entry: continue
             entry.mark = c if entry.mark != c else " "
@@ -396,7 +407,7 @@ class State:
         self.stale = True
 
     def expunge_deleted(self):
-        filenames = self.get_filenames("X")
+        filenames = self.get_selected_filenames("X", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
@@ -411,7 +422,7 @@ class State:
                                   (filename, str(e)))
 
     def expunge_backup_cp(self):
-        filenames = self.get_filenames("K")
+        filenames = self.get_selected_filenames("K", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
@@ -422,7 +433,7 @@ class State:
             Utils.make_backup_cp(filename)
 
     def expunge_backup_mv(self):
-        filenames = self.get_filenames("k")
+        filenames = self.get_selected_filenames("k", none_ok=True)
         count = len(filenames)
         if count == 0:
             return
@@ -453,7 +464,7 @@ class State:
 
     def stash_push(self):
         global logger
-        filenames = self.get_target_filenames(none_ok=False)
+        filenames = self.get_selected_filenames(none_ok=False)
         if len(filenames) == 0:
             self.display.warn("No files!")
             return
@@ -464,7 +475,7 @@ class State:
 
     def stash_pop(self):
         global logger
-        filenames = self.get_target_filenames(none_ok=False)
+        filenames = self.get_selected_filenames(none_ok=False)
         if len(filenames) == 0:
             self.display.warn("No files!")
             return

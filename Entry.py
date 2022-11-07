@@ -20,6 +20,10 @@ class Entry:
         if len(self.flags) > 0: result += "[%s]" % self.flags
         return result
 
+    def __repr__(self):
+        """ Needed for str(list) """
+        return self.__str__()
+
     def show(self, name_max):
         f = len(self.flags)
         if f > 0: name_max = name_max - f
@@ -46,6 +50,9 @@ class Entry:
         ds = dt.strftime("%Y-%m-%d %H:%M")
         return Utils.bytes_human(sz) + " " + ds
 
+    def names(self):
+        """ Overridden by EntryRename """
+        return [ self.name ]
 
 class EntryRename(Entry):
 
@@ -63,3 +70,6 @@ class EntryRename(Entry):
 
     def show(self, name_max):
         return self.state + " " + self.fromfile + " -> " + self.name
+
+    def names(self):
+        return [ self.name, self.fromfile ]

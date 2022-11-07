@@ -47,7 +47,6 @@ then
   printf "${e}K"
 fi
 
-
 # We redirected to the log, assert this file exists:
 if ! [ -r $VCMENU_ERR_LOG ]
 then

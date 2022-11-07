@@ -4,10 +4,9 @@
 import os
 import subprocess
 
+from log_tools import TRACE
 from vc_base import vc_base
-
 from Entry import Entry
-
 import Utils
 
 
@@ -25,17 +24,26 @@ class vc_svn(vc_base):
         # Default:
         relative_url = "..."
         root_path = ""
+        repo = None
         try:
             workdir = os.getcwd()
             os.chdir(self.root)
             p = subprocess.Popen(["svn", "info"],
                                  stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+                                 stderr=subprocess.STDOUT)
             while True:
                 line = p.stdout.readline().decode('UTF-8')
                 line = line.strip()
                 if len(line) == 0:
+                    self.logger.log(TRACE,
+                                    "vc_svn.get_info(): output done.")
                     break
+                self.logger.log(TRACE,
+                                "vc_svn.get_info(): read: " + line)
+                if "svn: E" in line:
+                    print(line)
+                    self.logger.warn(line)
+                    repo = None
                 if "W155010" in line:
                     print("svn info: W155010")
                     exit(1)
@@ -44,6 +52,7 @@ class vc_svn(vc_base):
                     repo = tokens[2]
                 # Relative URL does not work in
                 #    SVN 1.7.14 (released 2013-11) (Stampede2 2022-04-27)
+                #    SVN 1.7.14 (released 2013-11) (CLASSE    2022-11-05)
                 # Leads to missing data in info line at top
                 # Could be fixed with additional string arithmetic
                 if line.startswith("Relative URL"):
@@ -54,6 +63,7 @@ class vc_svn(vc_base):
                     root_path = tokens[4]
         except Exception as e:
             print(str(e))
+            repo = None
         if repo is None:
             print("Could not find SVN info!")
             exit(1)
@@ -136,7 +146,7 @@ class vc_svn(vc_base):
             results.append(Entry(mark, "S ", f))
 
     def add(self):
-        filenames = self.state.get_target_filenames()
+        filenames = self.state.get_selected_filenames()
         try:
             command = [ "svn", "add" ]
             command += filenames
@@ -147,7 +157,7 @@ class vc_svn(vc_base):
             pass
 
     def diff(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("svn diff " + str(filenames),
         #                  timeout=len(filenames))
         command = [ "svn", "diff" ]
@@ -159,7 +169,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def commit(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         # self.display.warn("svn commit " + str(filenames),
         #                timeout=len(filenames))
         command = [ "svn", "commit", "--" ]
@@ -177,7 +187,7 @@ class vc_svn(vc_base):
         subprocess.call(command)
 
     def log(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         if len(filenames) > 1:
             self.state.display.warn("Log requires 0 or 1 file(s)!")
             return
@@ -188,7 +198,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def blame(self):
-        filenames = self.state.get_target_filenames(none_ok=False)
+        filenames = self.state.get_selected_filenames(none_ok=False)
         if len(filenames) != 1:
             self.state.display.warn("Blame requires 1 file!")
             return
@@ -199,7 +209,7 @@ class vc_svn(vc_base):
         Utils.run_stdout(self.state.display, command)
 
     def resolved(self):
-        filenames = self.state.get_target_filenames(none_ok=False)
+        filenames = self.state.get_selected_filenames(none_ok=False)
         command = [ "svn", "resolved" ]
         command += filenames
         global logger

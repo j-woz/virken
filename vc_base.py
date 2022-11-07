@@ -12,7 +12,7 @@ class vc_base:
         self.logger = logger
 
     def diff2(self):
-        filenames = self.state.get_target_filenames(none_ok=True)
+        filenames = self.state.get_selected_filenames(none_ok=True)
         if len(filenames) != 2:
             self.state.display.warn("Two-file diff requires two files!")
             return

@@ -5,17 +5,7 @@ FEATURES:
 
 Hide SVN externals (prefix 'X')
 
-Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
-
-Git reset index (grp)
-
-Unknown directories look like files - add trailing slash - SVN only?
-
 Use gm_readline()
-
-Allow removing it
-
-Git stash push/pop
 
 Sort by name/size/date
 
@@ -26,6 +16,16 @@ Set/reset x bit (x2)
 Support /bin/less flags (disable bell!)
 
 View vcmenu log from within app - NEW 2022-05-12
+
+Forward/back directory - HELP < 2022-07-01
+
+SVN un-add - HELP < 2022-07-01
+
+Don't try to run editor on more than one file 2022-10-14
+
+Crashes if run in a directory containing a deleted file 2022-10-19
+
+Support setting log level on command line - NEW 2022-11-05
 
 STANDARDS:
 
@@ -118,7 +118,7 @@ Show file count when paging (MORE: ##) - DONE 2021-10-09
 
 View logs, blame (x5) - DONE 2021-10-09
 
-Better redraw when moving arrow - DONE?
+Better redraw when moving arrow - DONE
 
 Git unstage changes (grh) - DONE 2021-10-09
 
@@ -137,3 +137,6 @@ Show executable bit (x2) - DONE 2022-04-20
 Button for SVN resolved via Subversion subcommand (x3) -
 DRAFT 2022-02-12 NOT DONE
 DONE 2022-06-06
+
+Better redraw when moving arrow - DONE? - Not DONE - 2021-05-18 (x2)
+DONE - ~2022-06-15

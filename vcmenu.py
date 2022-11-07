@@ -10,7 +10,7 @@ from vc_svn import vc_svn
 from vc_git import vc_git
 from vc_fs  import vc_fs
 
-from log_tools import logger_init, logger_get
+from log_tools import TRACE, logger_init, logger_get
 
 from Display import Display
 from State   import State
@@ -192,7 +192,7 @@ def handle_action(action):
 
 def detect_vc(p):
     """ p: A Path.  Return TYPE, ROOT """
-    for level in range(1,20):
+    for level in range(1, 20):
         svndir = p / ".svn"
         if svndir.exists():
             return "SVN", p
@@ -342,6 +342,8 @@ def handle_char(c):
         state.stale = True
     elif c == "w":
         state.search()
+    elif c == "W":
+        state.toggle_worddiff()
     elif c == "x":
         state.mark_delete()
         state.key_down()
@@ -359,9 +361,6 @@ def handle_char(c):
         state.page_up()
     elif c == "N" or c == "KEY_NPAGE":
         state.page_down()
-    # elif c == "M": # What is this? 2020-12-10
-    #     display.out("x")
-    #     Utils.run_poll(display, ["./delay.sh"])
     elif c == ">":
         state.cd()
     elif c == "^":
@@ -445,4 +444,5 @@ def abort(logger):
     exit(1)
 
 
+# Run this program!
 main()

@@ -85,9 +85,9 @@ def run_stderr(command):
     '''  This discards stdout!  '''
     fp = tempfile.TemporaryFile(mode="w+", buffering=1)
     # sys.stderr.write(str(command) + "\n")
-    log_command("run_stdout", command)
+    log_command("run_stderr", command)
     cp = subprocess.run(command, stdout=DEVNULL, stderr=fp)
-    log_command("run_stdout", command, done=True)
+    log_command("run_stderr", command, done=True)
     errs = None
     if cp.returncode != 0:
         fp.seek(0)
@@ -202,7 +202,7 @@ def editor_files(display, files):
 def log_command(func, command, logger=None, done=False):
     logger = log_tools.logger_get(logger, "Utils")
     # logger.info(str(command))
-    suffix = " done." if done else ""
+    suffix = " done." if done else " ..."
     logger.info(func + "(): " + "command: " +
                 " ".join(command) + suffix)
 
