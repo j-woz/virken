@@ -5,7 +5,7 @@ set -eu
 # Main wrapper script
 # This is POSIX sh compatible for speed
 
-VCMENU_HOME=$( realpath $( dirname $0 ) )
+VCMENU_HOME=$( cd $( dirname $0 ) ; /bin/pwd )
 export VCMENU_HOME
 
 # Use VCMENU_TMP or TMP/USER/vcmenu
