@@ -1,13 +1,13 @@
 
 # ENTRY
-# Entries in the Status table
+# Entries in the State table
 
 from log_tools import logger_get
 
 
 class Entry:
 
-    ''' Most entries A, M, etc. '''
+    """ Most entries A, M, etc. """
 
     def __init__(self, mark, state, name, flags=""):
         self.mark  = mark   # E.g. ">", "X", etc.
@@ -36,27 +36,13 @@ class Entry:
             return self.name[0:name_max]
         return self.name
 
-    def get_stats(self):
-        import datetime, os
-        import Utils
-        try:
-            s = os.stat(self.name)
-        except FileNotFoundError:
-            return "File Not Found"
-        self.state.cache[self.name] = s
-        sz = s.st_size
-        mt = s.st_mtime
-        dt = datetime.datetime.fromtimestamp(mt)
-        ds = dt.strftime("%Y-%m-%d %H:%M")
-        return Utils.bytes_human(sz) + " " + ds
-
     def names(self):
         """ Overridden by EntryRename """
         return [ self.name ]
 
 class EntryRename(Entry):
 
-    ''' File renaming entries R -> '''
+    """ File renaming entries R -> """
 
     def __init__(self, mark, state, fromfile, name):
         self.mark     = mark

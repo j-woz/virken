@@ -2,7 +2,7 @@
 # STATE PY
 
 from enum import Enum
-import os, stat
+import datetime, os, stat
 import subprocess
 
 import Utils
@@ -13,11 +13,13 @@ from log_tools import logger_get
 
 class State:
 
-    """ The overall state of VCMENU.
-        Contains the table of VC entries.
+    """
+    The overall state of VCMENU.
+    Contains the table of VC entries.
     """
 
     class Diff(Enum):
+        """ Type of diff to perform """
         LINE = 1
         WORD = 2
 
@@ -66,10 +68,6 @@ class State:
 
     def toggle_stats(self):
         self.stats = not self.stats
-        # msg = "Stats enabled."       \
-        #       if self.stats          \
-        #       else "Stats disabled."
-        # self.display.warn(msg)
         self.stale = True
 
     def toggle_worddiff(self):
@@ -172,7 +170,9 @@ class State:
             self.show_entry(index, entry, fmt, name_max)
 
     def show_entry(self, index, entry, fmt, name_max):
-        stats = entry.get_stats() if self.stats else ""
+        filename = self.table[index].name
+        s = self.lookup_stats(filename) if self.stats else ""
+        stats = State.show_stat(s)
         self.display.menu_pointer(self.offset, index, index==self.current)
         line = fmt % (entry.mark, index, entry.show(name_max), stats)
         self.display.menu_content(self.offset, index, line)
@@ -507,32 +507,43 @@ class State:
                 break
             index += 1
 
-    def get_stats(self, filename):
-        # This is also done in Entry.get_stats()
+    def lookup_stats(self, filename):
         logger = logger_get(None, "CacheStats")
         logger.setLevel(logging.DEBUG)
         if filename not in self.cache_stats:
             logger.info("MISS: " + filename)
-            try:
-                result = os.stat(filename)
-            except FileNotFoundError:
-                try:
-                    result = os.lstat(filename)
-                except FileNotFoundError:
-                    logger.info("FNF:  " + filename)
-                    result = None
-                else:
-                    logger.info("LNK!:  " + filename)
-                    result = "BROKEN_LINK"
-            self.cache_stats[filename] = result
+            result = self.do_stat(filename)
         else:  # Found in cache
             logger.info("HIT:  " + filename)
             result = self.cache_stats[filename]
         return result
 
+    def do_stat(self, filename):
+        try:
+            s = os.stat(filename)
+        except FileNotFoundError:
+            try:
+                s = os.lstat(filename)
+            except FileNotFoundError:
+                logger.info("FNF:  " + filename)
+                s = "FNF"
+            else:
+                logger.info("LNK!:  " + filename)
+                s = "BROKEN_LINK"
+        self.cache_stats[filename] = s
+        return s
+
+    def show_stat(s):
+        if type(s) == str: return s
+        sz = s.st_size
+        mt = s.st_mtime
+        dt = datetime.datetime.fromtimestamp(mt)
+        ds = dt.strftime("%Y-%m-%d %H:%M")
+        return Utils.bytes_human(sz) + " " + ds
+
     def is_executable(self, filename) -> bool:
-        s = self.get_stats(filename)
-        assert s is not None, "could not get_stats: " + filename
+        s = self.lookup_stats(filename)
+        assert s is not None, "could not do stat: " + filename
         if s == "BROKEN_LINK":
             return False
         result = bool(s.st_mode & stat.S_IEXEC) and \
@@ -541,7 +552,7 @@ class State:
         return result
 
     def is_directory(self, filename):
-        s = self.get_stats(filename)
+        s = self.lookup_stats(filename)
         result = stat.S_ISDIR(s.st_mode)
         if result: self.logger.info("directory: " + filename)
         return result
