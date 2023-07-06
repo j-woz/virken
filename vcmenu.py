@@ -115,6 +115,7 @@ def set_directory(directory, logger):
 
 
 def set_vc(state, logger, force_fs=False):
+    """ Figure out what Version Control system we are using """
     global VC
     workdir = os.getcwd()
     p = Path(workdir)
