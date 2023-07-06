@@ -131,6 +131,24 @@ def set_vc(state, logger, force_fs=False):
     state.VC = VC
 
 
+def detect_vc(p):
+    """ p: A Path.  Return TYPE, ROOT """
+    for level in range(1, 20):
+        svndir = p / ".svn"
+        if svndir.exists():
+            return "SVN", p
+        gitdir = p / ".git"
+        if gitdir.exists():
+            return "GIT", p
+        parent = p.parent.resolve()
+        if parent == p:  # Root "/" or some error
+            return "FS", None
+        p = parent
+
+    # Too many levels
+    return "NONE"
+
+
 def set_vc_info(VC, logger):
     try:
         logger.info("VC: " + VC.name)
@@ -190,23 +208,6 @@ def handle_action(action):
     else:
         raise(Exception("Unknown action! " + str(action)))
 
-
-def detect_vc(p):
-    """ p: A Path.  Return TYPE, ROOT """
-    for level in range(1, 20):
-        svndir = p / ".svn"
-        if svndir.exists():
-            return "SVN", p
-        gitdir = p / ".git"
-        if gitdir.exists():
-            return "GIT", p
-        parent = p.parent.resolve()
-        if parent == p:  # Root "/" or some error
-            return "FS", None
-        p = parent
-
-    # Too many levels
-    return "NONE"
 
 # def set_colors():
 #     c = 5
