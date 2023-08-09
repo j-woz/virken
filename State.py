@@ -522,6 +522,7 @@ class State:
         try:
             s = os.stat(filename)
         except FileNotFoundError:
+            logger = logger_get(None, "CacheStats")
             try:
                 s = os.lstat(filename)
             except FileNotFoundError:

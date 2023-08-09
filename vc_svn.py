@@ -5,7 +5,7 @@ import os
 import subprocess
 
 from log_tools import TRACE
-from vc_base import vc_base
+from vc_base import vc_base, StatusType
 from Entry import Entry
 import Utils
 
@@ -103,6 +103,7 @@ class vc_svn(vc_base):
             self.do_svn_status_line(reo, line, results)
 
     def do_svn_status_line(self, reo, line, results):
+        status_type = StatusType.NORMAL
         extra = " "
         # self.state.display.warn("line: " + line)
         if line[3] == "+":
@@ -116,9 +117,16 @@ class vc_svn(vc_base):
         name  = tokens[7]
         if self.state.glob_match(reo, name):
             flags = ""
-            mark = self.state.get_mark(name)
-            if self.state.is_executable(name):
+            if "!" in chars:
+                status_type = StatusType.DELETED
+                self.logger.info("missing: " + name)
+            if "D" in chars:
+                status_type = StatusType.DELETED
+                self.logger.info("deleted: " + name)
+            if status_type == StatusType.NORMAL and \
+               self.state.is_executable(name):
                 flags += "*"
+            mark = self.state.get_mark(name)
             results.append(Entry(mark, chars+extra, name, flags))
 
     def check_dirs(self, results):

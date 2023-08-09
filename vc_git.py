@@ -4,7 +4,7 @@
 import os
 import subprocess
 
-from vc_base import vc_base
+from vc_base import vc_base, StatusType
 from State import State
 from Entry import Entry, EntryRename
 import Utils
@@ -95,7 +95,7 @@ class vc_git(vc_base):
         reo = self.state.glob_compile()
         result = [ "NULL" ]
         while True:
-            status_type = "normal"
+            status_type = StatusType.NORMAL
             line = p.stdout.readline().decode("UTF-8")
             if len(line) == 0:
                 break
@@ -120,24 +120,25 @@ class vc_git(vc_base):
                 state    = tokens[0] + "_"
                 fromfile = tokens[2]
                 name     = tokens[4]
-                status_type = "rename"
+                status_type = StatusType.RENAME
             else:
                 self.display.warn("unknown line: " + str(tokens), timeout=10)
                 continue
             if "D" in state:
-                status_type = "deleted"
+                status_type = StatusType.DELETED
             if self.state.glob_match(reo, name):
                 mark = self.state.get_mark(name)
                 flags = ""
-                if status_type == "deleted":
+                if status_type == StatusType.DELETED:
                     flags += "(X)"
                 elif self.state.is_executable(name):
                     flags += "*"
                 if self.state.is_broken_link(name):
                     flags += "!"
-                if status_type == "normal" or status_type == "deleted":
+                if status_type == StatusType.NORMAL or \
+                   status_type == StatusType.DELETED:
                     entry = Entry(mark, state, name, flags)
-                elif status_type == "rename":
+                elif status_type == StatusType.RENAME:
                     entry = EntryRename(mark, state, fromfile, name)
                 else:
                     assert(False)

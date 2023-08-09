@@ -1,7 +1,16 @@
 
 # VC BASE
 
+from enum import Enum
+
 import Utils
+
+
+class StatusType(Enum):
+    """ Type of file status """
+    NORMAL  = 1
+    DELETED = 2
+    RENAME  = 3
 
 
 class vc_base:
