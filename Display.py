@@ -8,6 +8,9 @@ import curses
 from log_tools import logger_get
 
 
+logger = None
+
+
 class Display:
 
     def __init__(self, window):
@@ -15,11 +18,10 @@ class Display:
         self.error_result = ""
         # Rows unusable by menu content:
         self.overhead = 4  # VC.info + blank + (content) + blank + prompt
-        self.logger = logger_get(None, "Display")
+        global logger
+        self.logger = logger_get(logger, "Display")
 
-        # def curses_start(self):
-
-        self.logger.info("curses_start()")
+        # self.logger.debug("Display() ...")
         curses.noecho()
         curses.raw()
         curses.cbreak()
@@ -37,6 +39,7 @@ class Display:
             self.logger.info("could not initialize colors")
 
     def curses_stop(self):
+        # UNUSED? 2023-08-23
         self.logger.info("curses_stop()")
         curses.nocbreak()
         # self.window.keypad(False)

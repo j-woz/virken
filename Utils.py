@@ -52,6 +52,8 @@ def get_editor():
         return editor
     v, k = getenv(["VCMENU_EDITOR", "EDITOR"], default="vi", withkey=True)
     if v is not None:
+        global logger
+        logger = log_tools.logger_get(logger, "Utils")
         logger.info("editor: %s='%s'" % (k, v))
         editor = v.split()
     return editor
@@ -189,7 +191,8 @@ def pager_files(display, files):
     log_command("pager_files", command)
     cp = subprocess.run(command)
     if cp.returncode != 0:
-        logger = log_tools.logger_get(None, "Utils")
+        global logger
+        logger = log_tools.logger_get(logger, "Utils")
         logger.warn("pager_files(): command returned code=%i : %s" %
                     (cp.returncode, str(command)))
         return False

@@ -39,13 +39,20 @@ def main():
     curses.use_env(True)
     global menu_action
     menu_action = None
+    # Main control loop:
+    # Most actions fall out of the curses wrapper
+    # so that the various tools (e.g., editors) can use curses.
     while True:
         # curses.wrapper() cannot return a value-
         #                  we set global menu_action
+        logger.info("curses wrapper start...")
         curses.wrapper(show_menu)  # -> menu_action
+        logger.info("curses wrapper stop.\n")
         if menu_action == MenuAction.EXIT:
             break
+        logger.info("handle_action start...")
         handle_action(menu_action)
+        logger.info("handle_action stop.\n")
     logger.info("EXIT.\n")
 
 
