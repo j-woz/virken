@@ -54,8 +54,14 @@ then
   exit 1
 fi
 
+STAT_FORMAT="--format %s"
+if [ $( uname -o ) = "Darwin" ]
+then
+  STAT_FORMAT="-f %z"
+fi
+
 # If the log has anything in it, show it:
-SIZE=$( stat --format "%s" $VCMENU_ERR_LOG )
+SIZE=$( stat $STAT_FORMAT $VCMENU_ERR_LOG )
 if [ $SIZE != 0 ]
 then
   echo
