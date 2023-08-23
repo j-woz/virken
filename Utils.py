@@ -18,12 +18,16 @@ def tmp():
     return tempfile.mkstemp(suffix=".txt",
                             prefix=vcmenu_tmp+"/utils-")
 
-def getenv(L, default=None):
+def getenv(L, default=None, withkey=False):
+    """
+    returns the first environment variable matching a key in L.
+    if withkey, return the key also
+    """
     for entry in L:
         v = os.getenv(entry)
         if v != None and len(v) > 0:
-            return v
-    return default
+            return (v, entry) if withkey else v
+    return (default, "default") if withkey else default
 
 pager = None
 def get_pager():
@@ -44,10 +48,11 @@ def get_editor():
     """ returns: list of tokens to launch editor in the shell: """
     """ e.g. [ "emacs", "-nw" ]  """
     global editor
-    if editor != None:
+    if editor is not None:
         return editor
-    v = getenv([ "VCMENU_EDITOR", "EDITOR"], default="vi")
-    if v != None:
+    v, k = getenv(["VCMENU_EDITOR", "EDITOR"], default="vi", withkey=True)
+    if v is not None:
+        logger.info("editor: %s='%s'" % (k, v))
         editor = v.split()
     return editor
 
