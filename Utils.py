@@ -45,8 +45,11 @@ def get_pager():
 
 editor = None
 def get_editor():
-    """ returns: list of tokens to launch editor in the shell: """
-    """ e.g. [ "emacs", "-nw" ]  """
+    """
+    returns: list of tokens to launch editor in the shell:
+    e.g. [ "emacs", "-nw" ]
+    Defaults to [ "vi" ]
+    """
     global editor
     if editor is not None:
         return editor
