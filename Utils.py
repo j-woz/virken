@@ -31,10 +31,12 @@ def getenv(L, default=None, withkey=False):
 
 pager = None
 def get_pager():
-    """ returns: list of tokens to launch pager in the shell: """
-    """ e.g. [ "less", "-f" ]  """
-    """ NOTE: This list should be treated as read-only- """
-    """       use list.copy() """
+    """
+    returns: list of tokens to launch pager in the shell:
+    e.g. [ "less", "-f" ]
+    NOTE: This list should be treated as read-only-
+          use list.copy()
+    """
     global pager
     if pager != None:
         return pager
