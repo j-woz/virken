@@ -57,7 +57,11 @@ fi
 STAT_FORMAT="--format %s"
 if [ $( uname -o ) = "Darwin" ]
 then
-  STAT_FORMAT="-f %z"
+  # GNU stat supports --version, Darwin stat does not:
+  if ! stat --version 2>&1 > /dev/null
+  then
+    STAT_FORMAT="-f %z"
+  fi
 fi
 
 # If the log has anything in it, show it:
