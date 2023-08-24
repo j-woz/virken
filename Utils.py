@@ -92,7 +92,7 @@ def run_stdout(display, command):
     pager_files(display, [fp.name])
 
 def run_stderr(command):
-    '''  This discards stdout!  '''
+    """ This discards stdout! """
     fp = tempfile.TemporaryFile(mode="w+", buffering=1)
     # sys.stderr.write(str(command) + "\n")
     log_command("run_stderr", command)
