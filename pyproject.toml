@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "VerCtrl"
+version = "0.0.1"
+authors = [
+  { name="Justin Wozniak", email="justin@wozniaks.org" },
+]
+description = "A version control menu"
+readme = "README.adoc"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License version 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/j-woz/verctrl"
+"Bug Tracker" = "https://github.com/j-woz/verctrl/issues"
