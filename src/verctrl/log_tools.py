@@ -47,7 +47,7 @@ def logger_get(logger, name):
     """ Set up logging """
     if logger is not None:
         return logger
-    import logging
+    print("logger_get: " + name)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
 

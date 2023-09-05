@@ -8,7 +8,7 @@ import subprocess
 
 
 from verctrl.log_tools import logger_get
-import verctrl.Utils
+import verctrl.Utils   as     Utils
 
 
 class State:
@@ -38,7 +38,10 @@ class State:
         self.current = 1
         # First entry shown on this page
         self.offset = 1
-        self.logger = logger_get(None, "State")
+        self.logger_state = None
+        self.logger_cache = None
+        self.logger_state = logger_get(self.logger_state, "State")
+        self.logger_cache = logger_get(self.logger_cache, "Cache")
         # Whether to ignore according to VC
         self.ignores = True
         # Whether to show file stats (timestamp, size)
@@ -81,7 +84,7 @@ class State:
 
     def show(self):
         """ Returns a string that will prefix the main menu prompt """
-        self.logger.debug("show(): offset=%i" % self.offset)
+        self.debug("show(): offset=%i" % self.offset)
         if self.stale:
             self.table = self.VC.status(self.ignores)
             self.stale = False
@@ -91,8 +94,8 @@ class State:
             self.cache_links.clear()
 
         self.height, self.width = self.display.window.getmaxyx()
-        self.logger.debug("height,width=%i,%i" %
-                          (self.height,self.width))
+        self.debug("height,width=%i,%i" %
+                   (self.height,self.width))
         # table[0] is a sentinel "NULL"
         n = len(self.table)-1
 
@@ -104,7 +107,7 @@ class State:
         else:
             self.current = 0
 
-        self.logger.info("table total size: %i" % n)
+        self.info("table total size: %i" % n)
         # Modifiers to prompt:
         modifiers = []
         # Maximal number of entries we can show:
@@ -116,7 +119,7 @@ class State:
 
         # Number of entries actually shown
         self.shown = min(self.menu_space, n-(self.offset-1))
-        self.logger.info("shown=%i" % self.shown)
+        self.info("shown=%i" % self.shown)
 
         self.display.window.clear()
         info_line = self.VC.info
@@ -164,8 +167,8 @@ class State:
             name_max -= 27
         else:
             fmt += "%s"
-        # self.logger.debug("entry fmt='%s'" % fmt)
-        # self.logger.debug("name_max=%i" % name_max)
+        # self.logger_state.debug("entry fmt='%s'" % fmt)
+        # self.logger_state.debug("name_max=%i" % name_max)
         for index, entry in entries:
             self.show_entry(index, entry, fmt, name_max)
 
@@ -193,7 +196,7 @@ class State:
         result = []
         for entry in entries:
             result += entry.names()
-        self.logger.info("get_selected_filenames: '%s' %s" %
+        self.info("get_selected_filenames: '%s' %s" %
                          (mark, str(result)))
         return result
 
@@ -218,7 +221,7 @@ class State:
             if "NULL" == entry: continue
             if entry.mark == c:
                 result.append(entry)
-        self.logger.info("get_entries(): " + str(result))
+        self.logger_state.info("get_entries(): " + str(result))
         return result
 
     def key_up(self):
@@ -307,9 +310,9 @@ class State:
     def glob_error(self, e):
         text = str(e)  # exception text
         msg = "bad glob: '%s': %s" % (self.glob_pattern, text)
-        self.logger.warn("glob_compile(): exception: %s" %
+        self.logger_state.warn("glob_compile(): exception: %s" %
                          str(type(e)))
-        self.logger.warn("glob_compile(): " + msg)
+        self.logger_state.warn("glob_compile(): " + msg)
         self.display.warn(msg, timeout=10)
 
     def glob_match(self, reo, name):
@@ -393,7 +396,7 @@ class State:
                 self.marks_loaded = json.load(fp)
         except Exception as e:
             msg = "could not open: %s : %s" % (marks_json, str(e))
-            self.logger.warning("marks_load_from_file(): " + msg)
+            self.logger_state.warning("marks_load_from_file(): " + msg)
             self.display.warn(msg, timeout=10)
             return False
         self.info("Loaded marks.")
@@ -444,7 +447,7 @@ class State:
             Utils.make_backup_mv(filename)
 
     def cd(self):
-        self.logger.info("cd(): self.current=%i" % self.current)
+        self.logger_state.info("cd(): self.current=%i" % self.current)
         if self.current == 0:
             self.display.warn("Nothing to do!")
             return
@@ -454,7 +457,7 @@ class State:
             return
         os.chdir(entry.name)
         self.stale = True
-        self.logger.info("cd(): dir: '%s'" % entry.name)
+        self.logger_state.info("cd(): dir: '%s'" % entry.name)
         self.chdir = True
 
     def cd_up(self):
@@ -463,18 +466,18 @@ class State:
         self.chdir = True
 
     def stash_push(self):
-        global logger
+        global logger_state
         filenames = self.get_selected_filenames(none_ok=False)
         if len(filenames) == 0:
             self.display.warn("No files!")
             return
         command = [ "stash", "push" ]
         command += filenames
-        self.logger.info("command: " + str(command))
+        self.logger_state.info("command: " + str(command))
         subprocess.run(command)
 
     def stash_pop(self):
-        global logger
+        global logger_state
         filenames = self.get_selected_filenames(none_ok=False)
         if len(filenames) == 0:
             self.display.warn("No files!")
@@ -482,7 +485,7 @@ class State:
         command = [ "stash", "pop" ]
         filenames = self.stash_drop_suffixes(filenames)
         command += filenames
-        self.logger.info("command: " + str(command))
+        self.logger_state.info("command: " + str(command))
         subprocess.run(command)
 
     def stash_drop_suffixes(self, filenames):
@@ -508,13 +511,13 @@ class State:
             index += 1
 
     def lookup_stats(self, filename):
-        logger = logger_get(None, "CacheStats")
-        logger.setLevel(logging.DEBUG)
+        # self.logger_cache = logger_get(self.logger_cache, "Cache")
+        self.logger_cache.setLevel(logging.DEBUG)
         if filename not in self.cache_stats:
-            logger.info("MISS: " + filename)
+            self.logger_cache.info("MISS: " + filename)
             result = self.do_stat(filename)
         else:  # Found in cache
-            logger.info("HIT:  " + filename)
+            self.logger_cache.info("HIT:  " + filename)
             result = self.cache_stats[filename]
         return result
 
@@ -522,14 +525,14 @@ class State:
         try:
             s = os.stat(filename)
         except FileNotFoundError:
-            logger = logger_get(None, "CacheStats")
+            # self.logger_cache = logger_get(self.logger_cache, "Cache")
             try:
                 s = os.lstat(filename)
             except FileNotFoundError:
-                logger.info("FNF:  " + filename)
+                self.logger_cache.info("FNF:  " + filename)
                 s = "FNF"
             else:
-                logger.info("LNK!:  " + filename)
+                self.logger_cache.info("LNK!:  " + filename)
                 s = "BROKEN_LINK"
         self.cache_stats[filename] = s
         return s
@@ -549,13 +552,13 @@ class State:
             return False
         result = bool(s.st_mode & stat.S_IEXEC) and \
                  not stat.S_ISDIR(s.st_mode)
-        if result: self.logger.info("executable: " + filename)
+        if result: self.logger_state.info("executable: " + filename)
         return result
 
     def is_directory(self, filename):
         s = self.lookup_stats(filename)
         result = stat.S_ISDIR(s.st_mode)
-        if result: self.logger.info("directory: " + filename)
+        if result: self.logger_state.info("directory: " + filename)
         return result
 
     def is_link(self, filename):
@@ -571,7 +574,7 @@ class State:
         return self.is_link(filename) and not os.path.exists(filename)
 
     def info(self, msg):
-        self.logger.info(msg)
+        self.logger_state.info(msg)
 
     def debug(self, msg):
-        self.logger.debug(msg)
+        self.logger_state.debug(msg)

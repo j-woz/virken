@@ -67,7 +67,7 @@ def init():
 
     logger_init()
     global logger
-    logger = logger_get(None, "VERCTRL")
+    logger = logger_get(logger, "VERCTRL")
     logger.info("-----------------")
     logger.info("START: " + datetime.date.today().isoformat())
 
