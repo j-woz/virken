@@ -73,7 +73,6 @@ def init():
 
 
 def parse_args(logger):
-    print(str(logger))
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-F", "--force_fs", action="store_true",
