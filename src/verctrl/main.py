@@ -268,6 +268,7 @@ def show_menu(window):
         c = display.ask1("%s %s: " % (prefix, state.VC.name))
         if c != " ":
             c = c.strip()
+        logger.debug("key: " + c)
         if c == "q":
             menu_action = MenuAction.EXIT
             return
