@@ -43,11 +43,16 @@ def logger_init(enabled=True):
     return True
 
 
+# if (logger.hasHandlers()):
+#     logger.handlers.clear()
+# https://stackoverflow.com/questions/7173033/duplicate-log-output-when-using-python-logging-module
+
+
 def logger_get(logger, name):
     """ Set up logging """
     if logger is not None:
         return logger
-    print("logger_get: " + name)
+    # print("logger_get: " + name)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
 
