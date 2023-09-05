@@ -28,7 +28,9 @@ logger = None
 def main():
 
     global VC, state
-    logger = init()
+    global logger
+
+    init()
     parse_args(logger)
 
     state = State()
@@ -41,6 +43,7 @@ def main():
     curses.use_env(True)
     global menu_action
     menu_action = None
+
     # Main control loop:
     # Most actions fall out of the curses wrapper
     # so that the various tools (e.g., editors) can use curses.
@@ -59,20 +62,18 @@ def main():
 
 
 def init():
-    global logger
-
     import atexit
     atexit.register(report_error_outs)
 
     logger_init()
+    global logger
     logger = logger_get(None, "VERCTRL")
-    print("L1 " + str(logger))
+    logger.info("-----------------")
     logger.info("START: " + datetime.date.today().isoformat())
-
-    return logger
 
 
 def parse_args(logger):
+    print(str(logger))
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-F", "--force_fs", action="store_true",
@@ -283,7 +284,6 @@ def show_menu(window):
 
 def handle_char(c):
     """ Respond to a user input command """
-    import Utils
     global state, display, logger
     result = MenuAction.LOOP
     if c == "":
