@@ -23,7 +23,7 @@ then
 fi
 
 # Run VCMENU!
-if python3 $VCMENU_HOME/vcmenu.py $* 2> $VCMENU_ERR_LOG
+if python3 $VCMENU_HOME/src/verctrl/main.py $* 2> $VCMENU_ERR_LOG
 then
   CODE=0
 else

@@ -5,7 +5,7 @@ import time
 
 import curses
 
-from log_tools import logger_get
+from verctrl.log_tools import logger_get
 
 
 logger = None

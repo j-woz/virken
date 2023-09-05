@@ -4,12 +4,11 @@
 import os
 import subprocess
 
-from vc_base import vc_base, StatusType
-from State import State
-from Entry import Entry, EntryRename
-import Utils
-
-import log_tools
+from   verctrl.vc_base   import vc_base, StatusType
+from   verctrl.State     import State
+from   verctrl.Entry     import Entry, EntryRename
+import verctrl.Utils     as     Utils
+import verctrl.log_tools as     log_tools
 
 logger = None
 
@@ -160,7 +159,6 @@ class vc_git(vc_base):
         if self.state.diff_type == State.Diff.WORD:
             command.append("--word-diff=color")
         command += filenames
-        global logger
         self.logger.info(command)
         # subprocess.run(command) # instant return
         # Utils.run_simple(self.display, command)
@@ -174,16 +172,12 @@ class vc_git(vc_base):
         Utils.run_simple(self.display, command)
 
     def revert(self, filename):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
-        logger.info("revert: " + filename)
+        self.logger.info("revert: " + filename)
         Utils.make_backup_cp(filename)
         command = [ "git", "checkout", filename ]
         subprocess.call(command)
 
     def add_p(self):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
         filenames = self.state.get_selected_filenames()
         command = [ "git", "add", "-p" ]
         if len(filenames) == 0:
@@ -192,34 +186,29 @@ class vc_git(vc_base):
         Utils.run_interactive_errors(command)
 
     def checkout_p(self):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
         filenames = self.state.get_selected_filenames()
         command = [ "git", "checkout", "-p" ]
         if len(filenames) == 0:
             filenames = [ "." ]
         command += filenames
-        logger.info("checkout -p: " + " ".join(filenames))
+        self.logger.info("checkout -p: " + " ".join(filenames))
         for filename in filenames:
             Utils.make_backup_cp(filename)
         Utils.run_interactive_errors(command)
 
     def diff_cached(self):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
         filenames = self.state.get_selected_filenames(none_ok=True)
         command = [ "git", "diff", "--cached", "--color=always" ]
         if len(filenames) == 0:
             filenames = [ "." ]
         command += filenames
-        logger.info("diff --cached: " + " ".join(filenames))
+        self.logger.info("diff --cached: " + " ".join(filenames))
         Utils.run_stdout(self.display, command)
 
     def log(self):
         filenames = self.state.get_selected_filenames(none_ok=True)
         command = [ "git", "log" ]
         command += filenames
-        global logger
         self.logger.info(command)
         Utils.run_stdout(self.state.display, command)
 
@@ -230,16 +219,13 @@ class vc_git(vc_base):
             return
         command = [ "git", "blame" ]
         command += filenames
-        global logger
         self.logger.info(command)
         Utils.run_stdout(self.state.display, command)
 
     def reset_head(self):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
         filenames = self.state.get_selected_filenames(none_ok=True)
         for filename in filenames:
-            logger.info("reset head: " + filename)
+            self.logger.info("reset head: " + filename)
             Utils.make_backup_cp(filename)
         command = [ "git", "reset", "HEAD" ]
         command += filenames
@@ -247,11 +233,9 @@ class vc_git(vc_base):
         subprocess.call(command)
 
     def reset_patch(self):
-        global logger
-        logger = log_tools.logger_get(logger, "VC Git")
         filenames = self.state.get_selected_filenames(none_ok=True)
         for filename in filenames:
-            logger.info("reset patch: " + filename)
+            self.logger.info("reset patch: " + filename)
             Utils.make_backup_cp(filename)
         command = [ "git", "reset", "--patch" ]
         command += filenames

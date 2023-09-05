@@ -9,13 +9,19 @@ authors = [
   { name="Justin Wozniak", email="justin@wozniaks.org" },
 ]
 description = "A version control menu"
-readme = "README.adoc"
+readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GNU General Public License version 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
+
+# [tool.setuptools]
+# scripts = ["bin/verctrl"]
+
+[project.scripts]
+verctrl = "verctrl.main:main"
 
 [project.urls]
 "Homepage" = "https://github.com/j-woz/verctrl"

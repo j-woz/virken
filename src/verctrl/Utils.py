@@ -5,18 +5,20 @@ import os, sys
 import select, subprocess, tempfile
 from subprocess import DEVNULL, PIPE
 
-import log_tools
+import verctrl.log_tools as log_tools
 
 logger = None
 
 vcmenu_tmp = None
+
+
 def tmp():
     # returns fp, tmpfilename
-    global vcmenu_tmp
-    if vcmenu_tmp == None:
-        vcmenu_tmp = os.getenv("VCMENU_TMP")
+    global verctrl_tmp
+    if verctrl_tmp == None:
+        verctrl_tmp = os.getenv("VERCTRL_TMP")
     return tempfile.mkstemp(suffix=".txt",
-                            prefix=vcmenu_tmp+"/utils-")
+                            prefix=verctrl_tmp+"/utils-")
 
 def getenv(L, default=None, withkey=False):
     """
@@ -40,7 +42,7 @@ def get_pager():
     global pager
     if pager != None:
         return pager
-    v = getenv([ "VCMENU_PAGER", "PAGER" ], default="less --force")
+    v = getenv([ "VERCTRL_PAGER", "PAGER" ], default="less --force")
     if v != None:
         pager = v.split()
     return pager
@@ -55,7 +57,8 @@ def get_editor():
     global editor
     if editor is not None:
         return editor
-    v, k = getenv(["VCMENU_EDITOR", "EDITOR"], default="vi", withkey=True)
+    v, k = getenv(["VERCTRL_EDITOR", "EDITOR"],
+                  default="vi", withkey=True)
     if v is not None:
         global logger
         logger = log_tools.logger_get(logger, "Utils")

@@ -4,12 +4,11 @@
 import os
 import time
 
-from vc_base import vc_base
+from   verctrl.vc_base import vc_base
+from   verctrl.Entry   import Entry
+from   verctrl.State   import State
 
-from Entry import Entry
-from State import State
-
-import Utils
+import verctrl.Utils   as     Utils
 
 class vc_fs(vc_base):
 

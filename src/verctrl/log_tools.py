@@ -4,18 +4,30 @@
 # Standardize some Python logging techniques
 
 import logging
+import os
 
 logger_handler = None
 
 TRACE = 5
 
+
 def logger_init(enabled=True):
-    """ Set up the log file pointer.    """
-    """ Run this before starting curses """
+    """
+    Set up the log file pointer.
+    Run this before starting curses
+    """
     global logger_fp, logger_handler
     import os
+    user  = os.getenv("USER")
+    if user is not None and len(user) > 0:
+        u = "/" + user
+    else:
+        u = ""
     log_dir  = os.getenv("VCMENU_TMP")
-    log_file = log_dir + "/vcmenu.log"
+    if log_dir is None or len(log_dir) == 0:
+        log_dir = "/tmp" + u + "/verctrl"
+    os.makedirs(log_dir, exist_ok=True)
+    log_file = log_dir + "/verctrl.log"
     try:
         logger_fp = open(log_file, "a")
         logger_handler = logging.StreamHandler(stream=logger_fp)
@@ -29,6 +41,7 @@ def logger_init(enabled=True):
               str(e))
         return False
     return True
+
 
 def logger_get(logger, name):
     """ Set up logging """

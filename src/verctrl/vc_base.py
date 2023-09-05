@@ -3,7 +3,7 @@
 
 from enum import Enum
 
-import Utils
+import verctrl.Utils
 
 
 class StatusType(Enum):

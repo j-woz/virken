@@ -1,6 +1,8 @@
 
 BUGS:
 
+Cannot handle Git lines like: "RM vcmenu -> bin/verctrl" 2023-09-05
+
 FEATURES:
 
 Hide SVN externals (prefix 'X')

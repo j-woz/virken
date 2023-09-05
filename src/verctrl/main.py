@@ -6,21 +6,23 @@ import os
 
 from pathlib import Path
 
-from vc_svn import vc_svn
-from vc_git import vc_git
-from vc_fs  import vc_fs
+from verctrl.vc_svn import vc_svn
+from verctrl.vc_git import vc_git
+from verctrl.vc_fs  import vc_fs
 
-from log_tools import TRACE, logger_init, logger_get
+from verctrl.log_tools import TRACE, logger_init, logger_get
 
-from Display import Display
-from State   import State
-import Utils
+from verctrl.Display import Display
+from verctrl.State   import State
+import verctrl.Utils as Utils
 
 display = None
 state   = None
 
 # Set by argparse
 args_force_fs = False
+
+logger = None
 
 
 def main():
@@ -63,7 +65,8 @@ def init():
     atexit.register(report_error_outs)
 
     logger_init()
-    logger = logger_get(None, "VCMENU")
+    logger = logger_get(None, "VERCTRL")
+    print("L1 " + str(logger))
     logger.info("START: " + datetime.date.today().isoformat())
 
     return logger
@@ -92,13 +95,13 @@ def found(f):
 
 
 def load_settings(state):
-    config_dir  = Utils.getenv(["VCMENU_CONFIG_DIR"])
+    config_dir  = Utils.getenv(["VERCTRL_CONFIG_DIR"])
     if not found(config_dir):
         config_home = Utils.getenv(["XDG_CONFIG_HOME"],
                                    default=os.getenv("HOME")+"/.config")
-        config_dir = config_home+"/vcmenu"
+        config_dir = config_home+"/verctrl"
         if not found(config_dir):
-            config_dir = os.getenv("HOME")+"/.vcmenu"
+            config_dir = os.getenv("HOME")+"/.verctrl"
             if not found(config_dir):
                 return False
     load_fs_ignores(state, config_dir+"/fs-ignores.cfg")

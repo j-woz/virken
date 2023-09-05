@@ -3,12 +3,12 @@
 
 from enum import Enum
 import datetime, os, stat
+import logging
 import subprocess
 
-import Utils
 
-import logging
-from log_tools import logger_get
+from verctrl.log_tools import logger_get
+import verctrl.Utils
 
 
 class State:

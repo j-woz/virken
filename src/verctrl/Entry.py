@@ -2,7 +2,7 @@
 # ENTRY
 # Entries in the State table
 
-from log_tools import logger_get
+from verctrl.log_tools import logger_get
 
 
 class Entry:
