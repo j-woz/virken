@@ -215,7 +215,8 @@ def editor_files(display, files):
     subprocess.run(command)
     display.window.keypad(True)
 
-def log_command(func, command, logger=None, done=False):
+def log_command(func, command, done=False):
+    global logger
     logger = log_tools.logger_get(logger, "Utils")
     # logger.info(str(command))
     suffix = " done." if done else " ..."
