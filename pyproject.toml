@@ -17,9 +17,6 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-# [tool.setuptools]
-# scripts = ["bin/verctrl"]
-
 [project.scripts]
 verctrl = "verctrl.main:main"
 
