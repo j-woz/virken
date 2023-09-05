@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+
+# VERCTRL DEBUG
+# Run verctrl from its source tree
+# This is POSIX sh compatible for speed
+
+VERCTRL_HOME=$( cd $( dirname $0 )/.. ; /bin/pwd )
+export VERCTRL_HOME
+
+# Check that we have Python3
+if ! which python3 > /dev/null 2>&1
+then
+  echo "Add python3.6+ to your PATH!"
+  exit 1
+fi
+
+export PYTHONPATH=$VERCTRL_HOME/src
+
+# Run VCMENU!
+python3 $VERCTRL_HOME/src/verctrl/main.py ${*}
