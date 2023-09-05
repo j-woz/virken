@@ -456,5 +456,7 @@ def abort(logger):
     exit(1)
 
 
-# Run this program!
-main()
+# Debugging entry point
+# E.g., bin/verctrl-debug
+if __name__ == '__main__':
+    main()
