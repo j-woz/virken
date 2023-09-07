@@ -89,7 +89,7 @@ class vc_svn(vc_base):
         command = [ "svn", "status" ]
         if not ignores:
             command += [ "--no-ignore" ]
-        Utils.log_command("status", command, logger=self.logger)
+        Utils.log_command("status", command)
         p = subprocess.Popen(command,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
