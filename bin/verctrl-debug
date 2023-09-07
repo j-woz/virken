@@ -18,4 +18,5 @@ fi
 export PYTHONPATH=$VERCTRL_HOME/src
 
 # Run VCMENU!
-python3 $VERCTRL_HOME/src/verctrl/main.py ${*}
+# Cannot use ${*} on Mac sh/bash if empty
+python3 $VERCTRL_HOME/src/verctrl/main.py $*
