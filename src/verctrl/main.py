@@ -104,14 +104,7 @@ def load_settings(state):
             config_dir = os.getenv("HOME")+"/.verctrl"
             if not found(config_dir):
                 return False
-    load_fs_ignores(state, config_dir+"/fs-ignores.cfg")
-
-
-def load_fs_ignores(state, cfg):
-    if os.path.exists(cfg):
-        state.fs_ignores = Utils.read_list(cfg)
-    else:
-        state.fs_ignores = []
+    state.load_fs_ignores(state, config_dir+"/fs-ignores.cfg")
 
 
 def set_directory(directory, logger):

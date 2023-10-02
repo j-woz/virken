@@ -51,6 +51,7 @@ class State:
         # A single string glob pattern
         self.glob_pattern = None
         # A list of patterns to ignore
+        # May be None if there are no patterns (or FNF)
         self.fs_ignores = None
         # Did we do a chdir()?
         self.chdir = False
@@ -60,6 +61,12 @@ class State:
         #     or None if file-not-found
         self.cache_stats = {}
         self.cache_links = {}
+
+    def load_fs_ignores(self, cfg):
+        if os.path.exists(cfg):
+            self.fs_ignores = Utils.read_list(cfg)
+        else:
+            self.fs_ignores = None
 
     def toggle_ignores(self):
         self.ignores = not self.ignores

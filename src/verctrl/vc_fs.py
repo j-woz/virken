@@ -55,6 +55,9 @@ class vc_fs(vc_base):
 
     def compile_reos(self):
         if self.ignore_reos is not None:
+            # We already did the compilation
+            return
+        if self.state.fs_ignores is None:
             return
         self.ignore_reos = []
         import re
@@ -72,6 +75,8 @@ class vc_fs(vc_base):
             self.ignore_reos.append(reo)
 
     def ignored(self, filename):
+        if self.ignore_reos is None:
+            return False
         for reo in self.ignore_reos:
             match = reo.search(filename)
             if match is not None:
