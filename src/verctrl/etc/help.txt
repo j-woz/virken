@@ -1,9 +1,10 @@
 VCMENU HELP
 
+Space:  select item
 Enter:  refresh
 Number: select menu item
-a:      Mark: VC add selected         UP:   Move up
-A:      select all                    P:    Page up
+a:      Add to VC                     UP:   Move up
+A:      Select all                    P:    Page up
 b:      Show blame                    DOWN: Move down
 c:      Change directory              N:    Page down
 C:      VC commit selected+           ^:    Go up a directory
@@ -14,22 +15,21 @@ g:      Glob
 f:      Toggle FS mode
 G:      Git subcommand
 h:      Show this help
-I:      Show ignored files (toggle)
+I:      Toggle show ignored files
 j:      Jump to number
 k:      Mark: Move to backup file
 K:      Mark: Copy to backup file
-l:      Load marks from file
-L:      View log
+l:      Load marks
+L:      View VC log
 q:      Quit
-s:      Save marks to file
+s:      Save marks
 S:      Subversion subcommand (resolve@, stash@, un-add*)
-t:      Toggle file status for file*
-T:      Toggle file status for all*
+t:      Toggle show file status
 v:      Launch editor
 V:      reVert
 w:      Where (search)
 x:      Mark: Delete
-X:      Expunge deletes and backups
+X:      Expunge marked deletes and backups
 z:      Select zero (hide arrow)
 ::      Control line (like vi)*
 
