@@ -378,8 +378,10 @@ def handle_char(c):
 
 
 def help():
-    vcmenu_home = os.getenv("VCMENU_HOME")
-    Utils.pager_files(display, [ vcmenu_home + "/etc/help.txt" ] )
+    import verctrl.main
+    main_py = verctrl.main.__file__
+    verctrl_home = Path(main_py).parent
+    Utils.pager_files(display, [ verctrl_home / "etc/help.txt" ] )
 
 
 def git_subcmd():

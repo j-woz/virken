@@ -23,3 +23,6 @@ verctrl = "verctrl.main:main"
 [project.urls]
 "Homepage" = "https://github.com/j-woz/verctrl"
 "Bug Tracker" = "https://github.com/j-woz/verctrl/issues"
+
+[tool.setuptools.package-data]
+verctrl = ["etc/help.txt"]

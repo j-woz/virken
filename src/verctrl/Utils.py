@@ -218,6 +218,7 @@ def editor_files(display, files):
 def log_command(func, command, done=False):
     global logger
     logger = log_tools.logger_get(logger, "Utils")
+    command = map(str, command)
     # logger.info(str(command))
     suffix = " done." if done else " ..."
     logger.info(func + "(): " + "command: " +
