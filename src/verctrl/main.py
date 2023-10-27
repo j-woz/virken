@@ -6,15 +6,15 @@ import os
 
 from pathlib import Path
 
-from verctrl.vc_svn import vc_svn
-from verctrl.vc_git import vc_git
-from verctrl.vc_fs  import vc_fs
+from virken.vc_svn import vc_svn
+from virken.vc_git import vc_git
+from virken.vc_fs  import vc_fs
 
-from verctrl.log_tools import TRACE, logger_init, logger_get
+from virken.log_tools import TRACE, logger_init, logger_get
 
-from verctrl.Display import Display
-from verctrl.State   import State
-import verctrl.Utils as Utils
+from virken.Display import Display
+from virken.State   import State
+import virken.Utils as Utils
 
 display = None
 state   = None
@@ -99,9 +99,9 @@ def load_settings(state):
     if not found(config_dir):
         config_home = Utils.getenv(["XDG_CONFIG_HOME"],
                                    default=os.getenv("HOME")+"/.config")
-        config_dir = config_home+"/verctrl"
+        config_dir = config_home+"/virken"
         if not found(config_dir):
-            config_dir = os.getenv("HOME")+"/.verctrl"
+            config_dir = os.getenv("HOME")+"/.virken"
             if not found(config_dir):
                 return
     state.load_fs_ignores(config_dir+"/fs-ignores.cfg")
@@ -378,10 +378,10 @@ def handle_char(c):
 
 
 def help():
-    import verctrl.main
-    main_py = verctrl.main.__file__
-    verctrl_home = Path(main_py).parent
-    Utils.pager_files(display, [ verctrl_home / "etc/help.txt" ] )
+    import virken.main
+    main_py = virken.main.__file__
+    virken_home = Path(main_py).parent
+    Utils.pager_files(display, [ virken_home / "etc/help.txt" ] )
 
 
 def git_subcmd():
@@ -452,6 +452,6 @@ def abort(logger):
 
 
 # Debugging entry point
-# E.g., bin/verctrl-debug
+# E.g., bin/virken-debug
 if __name__ == '__main__':
     main()

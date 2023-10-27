@@ -7,8 +7,8 @@ import logging
 import subprocess
 
 
-from verctrl.log_tools import logger_get
-import verctrl.Utils   as     Utils
+from virken.log_tools import logger_get
+import virken.Utils   as     Utils
 
 
 class State:

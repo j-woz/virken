@@ -4,10 +4,10 @@
 import os
 import time
 
-from   verctrl.vc_base import vc_base
-from   verctrl.Entry   import Entry
-from   verctrl.State   import State
-import verctrl.Utils   as     Utils
+from   virken.vc_base import vc_base
+from   virken.Entry   import Entry
+from   virken.State   import State
+import virken.Utils   as     Utils
 
 class vc_fs(vc_base):
 

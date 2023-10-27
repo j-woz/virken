@@ -4,10 +4,10 @@
 import os
 import subprocess
 
-from   verctrl.vc_base   import vc_base, StatusType
-from   verctrl.Entry     import Entry
-import verctrl.Utils     as     Utils
-from   verctrl.log_tools import TRACE
+from   virken.vc_base   import vc_base, StatusType
+from   virken.Entry     import Entry
+import virken.Utils     as     Utils
+from   virken.log_tools import TRACE
 
 
 class vc_svn(vc_base):

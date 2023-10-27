@@ -5,7 +5,7 @@ import os, sys
 import select, subprocess, tempfile
 from subprocess import DEVNULL, PIPE
 
-import verctrl.log_tools as log_tools
+import virken.log_tools as log_tools
 
 logger = None
 
@@ -14,11 +14,11 @@ virken_tmp = None
 
 def tmp():
     # returns fp, tmpfilename
-    global verctrl_tmp
-    if verctrl_tmp == None:
-        verctrl_tmp = os.getenv("VERCTRL_TMP")
+    global virken_tmp
+    if virken_tmp == None:
+        virken_tmp = os.getenv("VERCTRL_TMP")
     return tempfile.mkstemp(suffix=".txt",
-                            prefix=verctrl_tmp+"/utils-")
+                            prefix=virken_tmp+"/utils-")
 
 def getenv(L, default=None, withkey=False):
     """

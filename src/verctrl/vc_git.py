@@ -4,11 +4,11 @@
 import os
 import subprocess
 
-from   verctrl.vc_base   import vc_base, StatusType
-from   verctrl.State     import State
-from   verctrl.Entry     import Entry, EntryRename
-import verctrl.Utils     as     Utils
-import verctrl.log_tools as     log_tools
+from   virken.vc_base   import vc_base, StatusType
+from   virken.State     import State
+from   virken.Entry     import Entry, EntryRename
+import virken.Utils     as     Utils
+import virken.log_tools as     log_tools
 
 logger = None
 
