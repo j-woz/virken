@@ -27,7 +27,7 @@ In the current state:
 * Typing `c` will commit `note-to-linus.txt`
 * Typing `X` will delete `note-to-self.txt` (it was already marked for deletion with `x`
 * Typing `a` will add `netlink.c` to the git index
-* Typing `d` will show the diff for `netlink.c`.  `e` will open it for viewing and `v` will open it for editing.
+* Typing `d` will show the diff for `netlink.c`.  Typing `e` will open it for viewing and typing `v` will open it for editing.
 
 == Metadata
 
