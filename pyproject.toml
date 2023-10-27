@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "VerCtrl"
+name = "Virken"
 version = "0.0.1"
 authors = [
   { name="Justin Wozniak", email="justin@wozniaks.org" },
@@ -18,11 +18,11 @@ classifiers = [
 ]
 
 [project.scripts]
-verctrl = "verctrl.main:main"
+virken = "virken.main:main"
 
 [project.urls]
-"Homepage" = "https://github.com/j-woz/verctrl"
-"Bug Tracker" = "https://github.com/j-woz/verctrl/issues"
+"Homepage" = "https://github.com/j-woz/virken"
+"Bug Tracker" = "https://github.com/j-woz/virken/issues"
 
 [tool.setuptools.package-data]
-verctrl = ["etc/help.txt"]
+virken = ["etc/help.txt"]
