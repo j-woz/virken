@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eu
 
-# VERCTRL DEBUG
-# Run verctrl from its source tree
+# VIRKEN DEBUG
+# Run virken from its source tree
 # This is POSIX sh compatible for speed
 
-VERCTRL_HOME=$( cd $( dirname $0 )/.. ; /bin/pwd )
-export VERCTRL_HOME
+VIRKEN_HOME=$( cd $( dirname $0 )/.. ; /bin/pwd )
+export VIRKEN_HOME
 
 # Check that we have Python3
 if ! which python3 > /dev/null 2>&1
@@ -15,8 +15,8 @@ then
   exit 1
 fi
 
-export PYTHONPATH=$VERCTRL_HOME/src
+export PYTHONPATH=$VIRKEN_HOME/src
 
-# Run VCMENU!
+# Run VIRKEN!
 # Cannot use ${*} on Mac sh/bash if empty
-python3 $VERCTRL_HOME/src/verctrl/main.py $*
+python3 $VIRKEN_HOME/src/virken/main.py $*
