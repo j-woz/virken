@@ -19,7 +19,7 @@ class vc_git(vc_base):
         self.name = "GIT"
         super().__init__(root, state, logger)
         self.info = None
-        # self.display is assigned by vcmenu.py
+        # self.display is assigned by virken.py
 
     def get_info(self):
         from pathlib import Path
@@ -63,7 +63,7 @@ class vc_git(vc_base):
         import itertools
         tokens = itertools.chain.from_iterable(tokens)  # flatten
         star = False
-        result = "_vcmenu_branch_error"
+        result = "_virken_branch_error"
         for token in tokens:
             token = token.strip(" \n")
             if star:

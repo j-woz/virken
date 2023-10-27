@@ -363,7 +363,7 @@ class State:
             if entry      == "NULL": continue
             if entry.mark == " ":    continue
             D[entry.name] = entry.mark
-        marks_json = ".vcmenu.json"
+        marks_json = ".virken.json"
         if not any(D):
             if os.path.exists(marks_json):
                 self.display.warn("Save: No marks: deleting file...")
@@ -387,7 +387,7 @@ class State:
 
     def marks_load_from_file(self, force):
         """ force: If True, load marks even if nothing changed """
-        marks_json = ".vcmenu.json"
+        marks_json = ".virken.json"
         # self.display.warn("load: chdir: " + str(self.chdir))
         if not force:
             if not self.chdir and self.marks_loaded is not None:

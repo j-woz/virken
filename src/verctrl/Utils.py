@@ -9,7 +9,7 @@ import verctrl.log_tools as log_tools
 
 logger = None
 
-vcmenu_tmp = None
+virken_tmp = None
 
 
 def tmp():

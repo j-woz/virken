@@ -111,7 +111,7 @@ def set_directory(directory, logger):
     try:
         os.chdir(directory)
     except:
-        print("vcmenu: could not chdir to: " + directory)
+        print("virken: could not chdir to: " + directory)
         abort(logger)
 
     logger.info("PWD: " + os.getcwd())
