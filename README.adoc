@@ -5,17 +5,42 @@ A Version Control Menu tool.
 
 Simply wraps the output of +git status+ in a useful menu, so you can quickly view, edit, diff, revert, and commit changes, etc., often with single keystrokes.
 
-== Meaning
+Also works with Subversion.  Additionally offers a limited filesystem browser.
+
+== Preview
+
+Typical view after making a change to the kernel:
+
+----
+ git@github.com:torvalds/linux.git . @master
+
+          1) _M CREDITS
+  ==>     2) _M net/handshake/netlink.c
+          3) A_ note-to-linus.txt
+       X  4) ?? note-to-self.txt
+
+  GIT:
+----
+
+== Metadata
+
+=== Meaning
 
 The name is just a play on version control, but coincidentally means "work" in Danish.
 
-== Dependencies
+=== Dependencies
 
 Requires Python 3.6 for PosixPath iterable stuff.  No other packages.
 
 Implemented Python's +curses+ library and typical command-line tools.
 
-== Known issues
+=== Known issues
 
 Currently cannot run +vi+ as editor due to unknown incompatibility.
 Works fine with +nano+, +emacs+, +ed+.
+
+=== Implementation plan
+
+We simply show the output from +git status+ (or +svn status+ or +ls+), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.).
+
+== Usage
