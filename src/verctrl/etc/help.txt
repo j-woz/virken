@@ -1,4 +1,4 @@
-VCMENU HELP
+VIRKIN HELP
 
 Space:  select item
 Enter:  refresh
