@@ -3,7 +3,7 @@
 
 A Version Control Menu tool.
 
-Simply wraps the output of +git status+ in a useful menu, so you can quickly view, edit, diff, revert, and commit changes, etc., often with single keystrokes.
+Simply wraps the output of `git status` in a useful menu, so you can quickly view, edit, diff, revert, and commit changes, etc., often with single keystrokes.
 
 Also works with Subversion.  Additionally offers a limited filesystem browser.
 
@@ -32,20 +32,20 @@ The name is just a play on version control, but coincidentally means "work" in D
 
 Requires Python 3.6 for PosixPath iterable stuff.  No other packages.
 
-Implemented Python's +curses+ library and typical command-line tools.
+Implemented Python's `curses` library and typical command-line tools.
 
 === Known issues
 
-Currently cannot run +vi+ as editor due to unknown incompatibility.
-Works fine with +nano+, +emacs+, +ed+.
+Currently cannot run `vi` as editor due to unknown incompatibility.
+Works fine with `nano`, `emacs`, `ed`.
 
 === Implementation plan
 
-We simply show the output from +git status+ (or +svn status+ or +ls+), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.).
+We simply show the output from `git status` (or `svn status` or `ls`), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.).
 
 == Usage
 
-Type +h+ for help and get:
+Type `h` for help and get:
 
 ----
 VIRKIN HELP
@@ -92,18 +92,18 @@ Virken automatically detects the relevant version control (VC) system (Git, Subv
 
 Files may be "marked" as "select", "backup", or "delete".  The marks apply to many of the commands.  So, for example, you can select multiple files, diff all of them, and then quickly commit them with very few keystrokes.
 
-You can save the marks with +s+, quit Virken, then launch it again, and your marks will automatically be reloaded.  The marks are stored in +./.virken.json+ .
+You can save the marks with `s`, quit Virken, then launch it again, and your marks will automatically be reloaded.  The marks are stored in `./.virken.json` .
 
 === Environment
 
 These environment variables have an effect on Virken:
 
-+EDITOR+::
-Used to select the editor for key +v+.
+`EDITOR`::
+Used to select the editor for key `v`.
 
-+PAGER+::
-Used to select the pager for key +e+.
+`PAGER`::
+Used to select the pager for key `e`.
 
 === Backup files
 
-Many commands make GNU-style backup files (with a tilde).  These include commands +k+ (move to backup), +V+ (reVert).
+Many commands make GNU-style backup files (with a tilde).  These include commands `k` (move to backup), `V` (reVert).
