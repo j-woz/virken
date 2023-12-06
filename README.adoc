@@ -111,6 +111,12 @@ Used to select the editor for key `v`.
 `PAGER`::
 Used to select the pager for key `e`.
 
+==== Environment variables set by Virken:
+
+`VIRKEN_HOME`::
+Set to the directory containing the Virken you are running.
+Can be used by tools to detect they are running under Virken.
+
 === Backup files
 
 Many commands make GNU-style backup files (with a tilde).  These include commands `k` (move to backup), `V` (reVert).

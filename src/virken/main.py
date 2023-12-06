@@ -1,5 +1,5 @@
 
-# VCMENU
+# VIRKEN MAIN
 
 import datetime
 import os
@@ -15,6 +15,9 @@ from virken.log_tools import TRACE, logger_init, logger_get
 from virken.Display import Display
 from virken.State   import State
 import virken.Utils as Utils
+
+# The file path to main.py
+main_py = None
 
 display = None
 state   = None
@@ -65,9 +68,16 @@ def init():
     import atexit
     atexit.register(report_error_outs)
 
+    global main_py
+    import virken.main
+    main_py = virken.main.__file__
+    pkg_dir = os.path.dirname(main_py)
+
+    os.setenv("VIRKEN_HOME", pkg_dir)
+
     logger_init()
     global logger
-    logger = logger_get(logger, "VERCTRL")
+    logger = logger_get(logger, "VIRKEN")
     logger.info("-----------------")
     logger.info("START: " + datetime.date.today().isoformat())
 
@@ -95,7 +105,7 @@ def found(f):
 
 
 def load_settings(state):
-    config_dir  = Utils.getenv(["VERCTRL_CONFIG_DIR"])
+    config_dir  = Utils.getenv(["VIRKEN_CONFIG_DIR"])
     if not found(config_dir):
         config_home = Utils.getenv(["XDG_CONFIG_HOME"],
                                    default=os.getenv("HOME")+"/.config")
@@ -378,8 +388,7 @@ def handle_char(c):
 
 
 def help():
-    import virken.main
-    main_py = virken.main.__file__
+    global main_py
     virken_home = Path(main_py).parent
     Utils.pager_files(display, [ virken_home / "etc/help.txt" ] )
 

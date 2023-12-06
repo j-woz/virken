@@ -16,7 +16,7 @@ def tmp():
     # returns fp, tmpfilename
     global virken_tmp
     if virken_tmp == None:
-        virken_tmp = os.getenv("VERCTRL_TMP")
+        virken_tmp = os.getenv("VIRKEN_TMP")
     return tempfile.mkstemp(suffix=".txt",
                             prefix=virken_tmp+"/utils-")
 
@@ -42,7 +42,7 @@ def get_pager():
     global pager
     if pager != None:
         return pager
-    v = getenv([ "VERCTRL_PAGER", "PAGER" ], default="less --force")
+    v = getenv([ "VIRKEN_PAGER", "PAGER" ], default="less --force")
     if v != None:
         pager = v.split()
     return pager
@@ -57,7 +57,7 @@ def get_editor():
     global editor
     if editor is not None:
         return editor
-    v, k = getenv(["VERCTRL_EDITOR", "EDITOR"],
+    v, k = getenv(["VIRKEN_EDITOR", "EDITOR"],
                   default="vi", withkey=True)
     if v is not None:
         global logger
