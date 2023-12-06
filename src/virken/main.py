@@ -73,7 +73,7 @@ def init():
     main_py = virken.main.__file__
     pkg_dir = os.path.dirname(main_py)
 
-    os.setenv("VIRKEN_HOME", pkg_dir)
+    os.environ["VIRKEN_HOME"] = pkg_dir
 
     logger_init()
     global logger
