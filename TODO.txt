@@ -32,6 +32,8 @@ https://www.youtube.com/watch?v=Ks9HWZWMsw4
 
 Simplify use of force_fs
 
+Use system to open PNGs, PDFs, etc.
+
 STANDARDS:
 
 A: selects all
