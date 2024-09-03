@@ -30,9 +30,9 @@ Support setting log level on command line - NEW 2022-11-05
 Support mouse clicks:  NEW 2023-03-15
 https://www.youtube.com/watch?v=Ks9HWZWMsw4
 
-Simplify use of force_fs
+Use system to open PNGs, PDFs, etc. (x2) - NEW 2024-08-16
 
-Use system to open PNGs, PDFs, etc.
+Simplify use of force_fs
 
 STANDARDS:
 
