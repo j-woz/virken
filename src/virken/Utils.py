@@ -212,7 +212,8 @@ def editor_files(display, files):
     # sys.stderr.write(str(command) + "\n")
     command += files
     log_command("editor_files", command)
-    subprocess.run(command)
+    # Pass in modified environment (VIRKEN_HOME)
+    subprocess.run(env=os.environ, args=command)
     display.window.keypad(True)
 
 def log_command(func, command, done=False):
