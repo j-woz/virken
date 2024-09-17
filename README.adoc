@@ -54,11 +54,6 @@ Requires Python 3.6 for PosixPath iterable stuff.  No other packages.
 
 Implemented Python's `curses` library and typical command-line tools.
 
-=== Known issues
-
-Currently cannot run `vi` as editor due to unknown incompatibility.
-Works fine with `nano`, `emacs`, `ed`.
-
 === Implementation plan
 
 We simply show the output from `git status` (or `svn status` or `ls`), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.).
@@ -118,10 +113,10 @@ You can save the marks with `s`, quit Virken, then launch it again, and your mar
 
 These environment variables have an effect on Virken:
 
-`EDITOR`::
+`VIRKEN_EDITOR` or `EDITOR`::
 Used to select the editor for key `v`.
 
-`PAGER`::
+`VIRKEN_PAGER` or `PAGER`::
 Used to select the pager for key `e`.
 
 ==== Environment variables set by Virken:
