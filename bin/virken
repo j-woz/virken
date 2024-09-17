@@ -54,12 +54,14 @@ then
   exit 1
 fi
 
+# Detect stat: Linux or BSD:
 STAT_FORMAT="--format %s"
 if [ $( uname -o ) = "Darwin" ]
 then
   # GNU stat supports --version, Darwin stat does not:
   if ! stat --version 2>&1 > /dev/null
   then
+    # This is the BSD flag:
     STAT_FORMAT="-f %z"
   fi
 fi
