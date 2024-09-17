@@ -1,19 +1,19 @@
 #!/bin/sh
 set -eu
 
-# VCMENU
+# VIRKEN
 # Main wrapper script
 # This is POSIX sh compatible for speed
 
-VCMENU_HOME=$( cd $( dirname $0 ) ; /bin/pwd )
-export VCMENU_HOME
+VIRKEN_HOME=$( cd $( dirname $0 ) ; /bin/pwd )
+export VIRKEN_HOME
 
-# Use VCMENU_TMP or TMP/USER/vcmenu
+# Use VIRKEN_TMP or TMP/USER/virken
 TMP=${TMP:-/tmp}
-VCMENU_TMP=${VCMENU_TMP:-$TMP/$USER/vcmenu}
-export VCMENU_TMP # Used internally by vcmenu
-mkdir -p $VCMENU_TMP
-VCMENU_ERR_LOG=$VCMENU_TMP/err.log
+VIRKEN_TMP=${VIRKEN_TMP:-$TMP/$USER/virken}
+export VIRKEN_TMP # Used internally by virken
+mkdir -p $VIRKEN_TMP
+VIRKEN_ERR_LOG=$VIRKEN_TMP/err.log
 
 # Check that we have Python3
 if ! which python3 > /dev/null 2>&1
@@ -22,8 +22,8 @@ then
   exit 1
 fi
 
-# Run VCMENU!
-if python3 $VCMENU_HOME/src/verctrl/main.py $* 2> $VCMENU_ERR_LOG
+# Run VIRKEN!
+if python3 $VIRKEN_HOME/src/verctrl/main.py $* 2> $VIRKEN_ERR_LOG
 then
   CODE=0
 else
@@ -33,8 +33,8 @@ fi
 if [ $CODE != 0 ]
 then
   # If there was an error, pause so the user can see it:
-  echo "vcmenu: ERROR code: $CODE"
-  echo "vcmenu: press Enter to quit."
+  echo "virken: ERROR code: $CODE"
+  echo "virken: press Enter to quit."
   read _
 
   # Is this needed for normal exit on Linux? 2020-02-02
@@ -48,9 +48,9 @@ then
 fi
 
 # We redirected to the log, assert this file exists:
-if ! [ -r $VCMENU_ERR_LOG ]
+if ! [ -r $VIRKEN_ERR_LOG ]
 then
-  echo "vcmenu: could not read error log: $VCMENU_ERR_LOG"
+  echo "virken: could not read error log: $VIRKEN_ERR_LOG"
   exit 1
 fi
 
@@ -65,14 +65,14 @@ then
 fi
 
 # If the log has anything in it, show it:
-SIZE=$( stat $STAT_FORMAT $VCMENU_ERR_LOG )
+SIZE=$( stat $STAT_FORMAT $VIRKEN_ERR_LOG )
 if [ $SIZE != 0 ]
 then
   echo
-  echo "vcmenu: ERRORS: "
-  echo "( see $VCMENU_ERR_LOG )"
+  echo "virken: ERRORS: "
+  echo "( see $VIRKEN_ERR_LOG )"
   echo
-  cat $VCMENU_ERR_LOG
+  cat $VIRKEN_ERR_LOG
 fi
 
 # Return the code from python3
