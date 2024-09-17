@@ -29,6 +29,19 @@ In the current state:
 * Typing `a` will add `netlink.c` to the git index
 * Typing `d` will show the diff for `netlink.c`.  Typing `e` will open it for viewing and typing `v` will open it for editing.
 
+== Installation
+
+----
+$ git clone https://github.com/j-woz/virken.git
+$ pip install virken
+----
+
+Run with `virken`.
+
+See `virken -h`.
+
+Use `virken-debug` to run from the source tree (not the pip installed code).
+
 == Metadata
 
 === Meaning
