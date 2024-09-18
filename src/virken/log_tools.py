@@ -23,7 +23,7 @@ def logger_init(enabled=True):
         u = "/" + user
     else:
         u = ""
-    log_dir  = os.getenv("VCMENU_TMP")
+    log_dir  = os.getenv("VIRKEN_TMP")
     if log_dir is None or len(log_dir) == 0:
         log_dir = "/tmp" + u + "/virken"
     os.makedirs(log_dir, exist_ok=True)

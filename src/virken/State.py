@@ -14,7 +14,7 @@ import virken.Utils   as     Utils
 class State:
 
     """
-    The overall state of VCMENU.
+    The overall state of Virken.
     Contains the table of VC entries.
     """
 
