@@ -52,11 +52,11 @@ The name is just a play on version control, but coincidentally means "work" in D
 
 Requires Python 3.6 for PosixPath iterable stuff.  No other packages.
 
-Implemented Python's `curses` library and typical command-line tools.
+Implemented using Python's `curses` library and typical command-line tools.
 
 === Implementation plan
 
-We simply show the output from `git status` (or `svn status` or `ls`), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.).
+We simply show the output from `git status` (or `svn status` or `ls`), then capture a keystroke and run the corresponding shell command.  We have to fall out of curses to run other tools that use curses (like the pager, editor, etc.); this is the most complicated part of the control logic.
 
 == Usage
 
