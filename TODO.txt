@@ -1,7 +1,8 @@
 
 BUGS:
 
-Cannot handle Git lines like: "RM vcmenu -> bin/verctrl" 2023-09-05
+Cannot handle Git lines like: "RM vcmenu -> bin/verctrl" NEW 2023-09-05
+Bug after search for file off screen NEW 2025-01-04
 
 FEATURES:
 
