@@ -35,6 +35,8 @@ Use system to open PNGs, PDFs, etc. (x2) - NEW 2024-08-16
 
 Simplify use of force_fs
 
+In FS mode, ignore tilde files - NEW 2025-03-06
+
 STANDARDS:
 
 A: selects all
