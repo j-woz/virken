@@ -37,6 +37,8 @@ Simplify use of force_fs
 
 In FS mode, ignore tilde files - NEW 2025-03-06
 
+Support deleting soft links to directories - NEW 2025-08-14
+
 STANDARDS:
 
 A: selects all
