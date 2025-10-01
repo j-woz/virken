@@ -39,6 +39,8 @@ In FS mode, ignore tilde files - NEW 2025-03-06
 
 Support deleting soft links to directories - NEW 2025-08-14
 
+Handle filenames with spaces - NEW 2025-10-01
+
 STANDARDS:
 
 A: selects all
