@@ -41,6 +41,8 @@ Support deleting soft links to directories - NEW 2025-08-14
 
 Handle filenames with spaces - NEW 2025-10-01
 
+On two subsequent warnings, the 2nd overwrites the first.  If shorter, it mixes them. - NEW 2025-10-01
+
 STANDARDS:
 
 A: selects all
