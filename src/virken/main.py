@@ -86,9 +86,9 @@ def parse_args(logger):
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-F", "--force_fs", action="store_true",
-                        help='Start in FS mode')
-    parser.add_argument('directory', nargs='?', default=".",
-                        help='Start in this directory')
+                        help="Start in FS mode")
+    parser.add_argument("directory", nargs="?", default=".",
+                        help="Start in this directory")
     args = parser.parse_args()
     set_directory(args.directory, logger)
     if args.force_fs:
@@ -462,5 +462,5 @@ def abort(logger):
 
 # Debugging entry point
 # E.g., bin/virken-debug
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
