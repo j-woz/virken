@@ -39,8 +39,6 @@ In FS mode, ignore tilde files - NEW 2025-03-06
 
 Support deleting soft links to directories - NEW 2025-08-14
 
-Handle filenames with spaces - NEW 2025-10-01
-
 On two subsequent warnings, the 2nd overwrites the first.  If shorter, it mixes them. - NEW 2025-10-01
 
 STANDARDS:
@@ -159,3 +157,5 @@ DONE - ~2022-06-15
 
 Crashes if run in a directory containing a deleted file 2022-10-19
 DONE - 2023-08-09
+
+Handle filenames with spaces - NEW 2025-10-01 - DONE 2025-12-01
