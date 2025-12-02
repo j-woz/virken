@@ -89,40 +89,30 @@ class vc_git(vc_base):
         return result
 
     def parse_status(self, p):
-        ''' p: A subprocess.Popen '''
+        """ p: A subprocess.Popen """
         # reo = Regular Expression Object
         reo = self.state.glob_compile()
         result = [ "NULL" ]
         while True:
             status_type = StatusType.NORMAL
             line = p.stdout.readline().decode("UTF-8")
-            if len(line) == 0:
-                break
+            if len(line) == 0: break
             line = line.rstrip()
-            tokens = line.split(" ")
-            self.logger.info("tokens: " + str(tokens))
 
-            if len(tokens) == 2:
-                state = tokens[0]
-                name  = tokens[1]
-            elif len(tokens) == 3:
-                if tokens[0] == "":
-                    state = "_" + tokens[1]
-                elif tokens[1] == "":
-                    state = tokens[0] + "_"
-                else:
-                    self.display.warn("weird line: " + str(tokens))
-                    continue
-                name = tokens[2]
-            # skipping len(tokens) == 4
-            elif len(tokens) == 5 and tokens[3] == "->":
-                state    = tokens[0] + "_"
-                fromfile = tokens[2]
-                name     = tokens[4]
-                status_type = StatusType.RENAME
+            state = line[0:2]
+            state = state.replace(" ", "_")
+            if "->" not in line:
+                name  = line[3:]
+                # Git uses double-quotes on filenames with spaces
+                name  = name.replace('"', '')
             else:
-                self.display.warn("unknown line: " + str(tokens), timeout=10)
-                continue
+                arrow    = line.find("->")
+                fromfile = line[2:arrow-1]
+                name     = line[arrow+3:]
+                fromfile = name.replace('"', '')
+                name     = name.replace('"', '')
+                status_type = StatusType.RENAME
+
             if "D" in state:
                 status_type = StatusType.DELETED
             if self.state.glob_match(reo, name):
