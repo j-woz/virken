@@ -28,10 +28,10 @@ Don't try to run editor on more than one file 2022-10-14
 
 Support setting log level on command line - NEW 2022-11-05
 
+Use system to open PNGs, PDFs, etc. (x2) - NEW 2024-08-16
+
 Support mouse clicks:  NEW 2023-03-15
 https://www.youtube.com/watch?v=Ks9HWZWMsw4
-
-Use system to open PNGs, PDFs, etc. (x2) - NEW 2024-08-16
 
 Simplify use of force_fs
 
@@ -40,6 +40,9 @@ In FS mode, ignore tilde files - NEW 2025-03-06
 Support deleting soft links to directories - NEW 2025-08-14
 
 On two subsequent warnings, the 2nd overwrites the first.  If shorter, it mixes them. - NEW 2025-10-01
+
+Support wrap in less via something like:
+LESSOPEN="|fmt -w $COLUMNS %s" less abstract.txt  - NEW 2025-12-05
 
 STANDARDS:
 
