@@ -18,7 +18,7 @@ def tmp():
     if virken_tmp == None:
         virken_tmp = os.getenv("VIRKEN_TMP")
     return tempfile.mkstemp(suffix=".txt",
-                            prefix=virken_tmp+"/utils-")
+                            prefix=virken_tmp+"/virken-utils-")
 
 def getenv(L, default=None, withkey=False):
     """
