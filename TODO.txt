@@ -44,6 +44,8 @@ On two subsequent warnings, the 2nd overwrites the first.  If shorter, it mixes 
 Support wrap in less via something like:
 LESSOPEN="|fmt -w $COLUMNS %s" less abstract.txt  - NEW 2025-12-05
 
+Use VIRKEN_TMP for tmp files in Utils.py - NEW 2026-10-01
+
 STANDARDS:
 
 A: selects all
