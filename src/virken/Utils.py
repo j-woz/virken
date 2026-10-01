@@ -85,16 +85,23 @@ def run_simple(display, command):
         return False
     return True
 
+
 def run_stdout(display, command):
-    # fp = tempfile.TemporaryFile(mode="w+", buffering=1)
-    fp = tempfile.NamedTemporaryFile(mode="wb+", buffering=0)
-    log_command("run_stdout", command)
-    cp = subprocess.run(command, stdout=fp, stderr=fp)
-    log_command("run_stdout", command, done=True)
-    fp.seek(0)
-    # message = fp.read()
-    # pager_str(display, message)
-    pager_files(display, [fp.name])
+    try:
+        # fp = tempfile.TemporaryFile(mode="w+", buffering=1)
+        fp = tempfile.NamedTemporaryFile(mode="wb+", buffering=0)
+        log_command("run_stdout", command)
+        cp = subprocess.run(command, stdout=fp, stderr=fp)
+        log_command("run_stdout", command, done=True)
+        fp.seek(0)
+        # message = fp.read()
+        # pager_str(display, message)
+        pager_files(display, [fp.name])
+    except KeyboardInterrupt:
+        global logger
+        logger = log_tools.logger_get(logger, "Utils")
+        logger.info("run_stdout(): KeyboardInterrupt")
+
 
 def run_stderr(command):
     """ This discards stdout! """
